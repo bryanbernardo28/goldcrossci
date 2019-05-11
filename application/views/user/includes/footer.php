@@ -4,74 +4,41 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-xs-12 col-sm-6">
-                        <div class="wrapper_second_about">
-                            <div class="wrapper_first_image">
-                                <a href="#"><img src="<?=base_url()?>assets/images/footer_logo.png" class="img-responsive" alt="logo" /></a>
-                            </div>
-                            <div class="abotus_content">
-                                <p>It is a long established fact that the reader wilcted by the readable cent of a the me page part.</p>
-                                <p>Lorem Ipsum is that it has aor-less normal distrion. </p>
-                            </div>
-                            <div class="aboutus_link">
-                                <a href="#">Read More<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                            </div>
-
-                        </div>
+                        
                     </div>
-                    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-6">
-                        <div class="wrapper_second_useful">
-                            <h4>Useful Links</h4>
-                            <ul>
-                                <li><a href="#"><i class="fa fa-stop-circle"></i>Technical Security Surveys </a>
-                                </li>
-                                <li><a href="#"><i class="fa fa-stop-circle"></i>CCTV System Network </a>
-                                </li>
-                                <li><a href="#"><i class="fa fa-stop-circle"></i>Mobile Patrol Management </a>
-                                </li>
-                                <li><a href="#"><i class="fa fa-stop-circle"></i>Security Includ</a>
-                                </li>
-                                <li><a href="#"><i class="fa fa-stop-circle"></i> Access Control Systems</a> </li>
-                            </ul>
-                        </div>
-                    </div>
+                    
                     <div class="col-lg-3 col-md-3 col-xs-12 col-sm-6">
                         <div class="wrapper_second_blog">
-                            <h4>latest news</h4>
+                            <h4>GOLDCROSS</h4>
                             <div class="blog_wrapper1">
-                                <div class="blog_image">
-                                    <img src="<?=base_url()?>assets/images/footer_1.png" class="img-responsive" alt="blog-img1_img" />
-                                </div>
+                                
                                 <div class="blog_text">
-                                    <h5><a href="#">Lorem Security the men sefty</a></h5>
-                                    <div class="blog_date">June 28, 2018</div>
+                                    
+                                    <h5>Security & Investigation Agency</h5>
+
+                                    <i class="fa fa-location-arrow"> </i><span>
+                                     #1334 Unit D - Colorado Apartments, Agoncillo St.,
+                                    Ermita, Manila, Philippines</span>
+                                     
+                                     
+                                    <div class="blog_date">February 28, 2019</div>
                                 </div>
                             </div>
-                            <div class="blog_wrapper2">
-                                <div class="blog_image">
-                                    <img src="<?=base_url()?>assets/images/footer_2.png" class="img-responsive" alt="blog-img2_img" />
-                                </div>
-                                <div class="blog_text">
-                                    <h5><a href="#">Lorem Security the men sefty</a></h5>
-                                    <div class="blog_date">June 28, 2018</div>
-                                </div>
-                            </div>
+                           
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-xs-12 col-sm-6">
                         <div class="wrapper_second_contact">
-                            <h4>news letter</h4>
-                            <div class="letter_div">
-                                <input type="text" placeholder="your email"><a href="#"><i class="fa fa-location-arrow"></i></a>
-                            </div>
+                            <h4>CONTACTS</h4>
+                            <div class="blog_wrapper1">
+                            
                             <ul>
-                                <li><i class="fa fa-location-arrow"></i><span>512 - omexcity, California</span>
-                                </li>
-                                <li><i class="fa fa-phone"></i><span>+65 1800-123-145</span>
-
-                                </li>
-                                <li><i class="fa fa-envelope"></i><a href="#">security@example.com</a>
-                                </li>
-
+                                
+                    
+                                <li><i class="fa fa-phone"></i><span>Telefax    :   (02) 712-8108</span> </li>
+                                <li><i class="fa fa-phone"></i><span>Mobile :   Globe -  0936-9030730</span> </li>
+                                <li><i class="fa fa-phone"></i><span>Mobile :   Smart - 0929-5425676</span> </li>
+                                <li><i class="fa fa-phone"></i><span>Mobile :   Sun - 0932-2025731</span> </li>
                             </ul>
                         </div>
                     </div>
@@ -85,7 +52,7 @@
             <div class="row">
                 <div class="col-lg-8 col-md-8 col-xs-12 col-sm-6">
                     <div class="section5_copyright">
-                        <p>© 2018 <a href="#">HawkEye</a> | created by <a href="#">webstrot.</a></p>
+                        <p>© 2019 Goldcross Security Agency | created by Hanijam</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6">
@@ -93,14 +60,7 @@
                         <ul>
                             <li><a href="#"><i class="fa fa-facebook"></i></a>
                             </li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a>
-                            </li>
-
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                            </li>
-
-                            <li><a href="#"><i class="fa fa-youtube"></i></a>
-                            </li>
+                
 
                         </ul>
                     </div>
@@ -139,41 +99,18 @@
     <script src="<?=base_url()?>assets/js/responsive_header.js"></script>
     <script src="<?=base_url()?>assets/js/custom.js"></script>
     <!--js code-->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.btnNext').click(function(){
+              $('.nav-tabs > .active').next('li').find('a').trigger('click');
+            });
 
-
-
-    <script>
-  $(document).ready(function(){
- /*   $('#example1').DataTable();
-    $('#example2').DataTable();*/
-
-    // function fetch_data(){
-
-    //   var dataTable = ('#user_data').DataTable({
-
-    //         "processing" : true;
-    //         "serverSide" : true;
-    //         "order"      : [];
-    //         "ajax"       :{
-
-    //               url : "account_admin.php",
-                  
-
-    //         }
-
-
-
-
-    //   });
-
-
-
-    // }
-
-
-
-  });
-</script>
+              $('.btnPrevious').click(function(){
+              $('.nav-tabs > .active').prev('li').find('a').trigger('click');
+            });
+        });
+    </script>
+    
 </body>
 
 </html>

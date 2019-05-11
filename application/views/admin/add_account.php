@@ -35,26 +35,45 @@
                   <span class="glyphicon glyphicon-user form-control-feedback"></span>
                    <?=form_error('lname','<span class="help-block">','</span>')?>
                 </div>
-                <!-- <div class="form-group has-feedback <?php if(!empty(form_error('uname'))): ?> has-error <?php endif?>">
-                  <input type="uname" class="form-control" placeholder="Username">
-                  <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                  <?=form_error('uname','<span class="help-block">','</span>')?>
+                <div class="form-group has-feedback <?php if(!empty(form_error('address'))): ?> has-error <?php endif?>">
+                  <input type="text" class="form-control" name="address" placeholder="Address">
+                  <span class="glyphicon glyphicon-map-marker form-control-feedback"></span>
+                  <?=form_error('address','<span class="help-block">','</span>')?>
+                </div>
+                <div class="form-group has-feedback <?php if(!empty(form_error('age'))): ?> has-error <?php endif?>">
+                  <input type="age" name="age" class="form-control" placeholder="Age">
+                  <span class="glyphicon glyphicon-heart form-control-feedback"></span>
+                  <?=form_error('age','<span class="help-block">','</span>')?>
+                </div>
+                <!-- <div class="form-group has-feedback <?php if(!empty(form_error('genderspecific'))): ?> has-error <?php endif?>">
+                  <input type="text" name="genderspecific" class="form-control" placeholder="Gender">
+                  <span class="fa fa-fw fa-venus-mars form-control-feedback"></span>
+                  <?=form_error('genderspecific','<span class="help-block">','</span>')?>
                 </div> -->
-                <div class="form-group has-feedback <?php if(!empty(form_error('email'))): ?> has-error <?php endif?>">
-                  <input type="email" name="email" class="form-control" placeholder="Email">
-                  <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                  <?=form_error('email','<span class="help-block">','</span>')?>
+                <div class="form-group has-feedback <?php if(!empty(form_error('genderspecific'))): ?> has-error <?php endif?>" >
+                  <select class="form-control" name="genderspecific">
+                    <option value="" disabled selected>Gender</option>
+                    <option value="0">Male</option>
+                    <option value="1">Female</option>
+                  </select>
+                  <?=form_error('genderspecific','<span class="help-block">','</span>')?>
                 </div>
-                <div class="form-group has-feedback <?php if(!empty(form_error('password'))): ?> has-error <?php endif?>">
-                  <input type="password" name="password" class="form-control" placeholder="Password">
-                  <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                  <?=form_error('password','<span class="help-block">','</span>')?>
+                <div class="form-group has-feedback <?php if(!empty(form_error('access'))): ?> has-error <?php endif?>">
+                  <select class="form-control">
+                    <option value="" disabled selected>Select Account Type</option>
+                    <option value="0">Admin</option>
+                    <option value="1">Employees</option>
+                    <option value="2">Client</option>
+                    <option value="3">Applicant</option>
+                  </select>
+                  <?=form_error('access','<span class="help-block">','</span>')?>
                 </div>
-                <div class="form-group has-feedback <?php if(!empty(form_error('cpassword'))): ?> has-error <?php endif?>">
-                  <input type="password" name="cpassword" class="form-control" placeholder="Re-type password">
-                  <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
-                  <?=form_error('cpassword','<span class="help-block">','</span>')?>
+                <div class="form-group has-feedback <?php if(!empty(form_error('company'))): ?> has-error <?php endif?>">
+                  <input type="text" name="genderspecific" name="company" class="form-control" placeholder="Company">
+                  <span class="glyphicon glyphicon-briefcase form-control-feedback"></span>
+                  <?=form_error('company','<span class="help-block">','</span>')?>
                 </div>
+
                 <div class="row">
                   <div class="col-xs-4 pull-right">
                     <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>

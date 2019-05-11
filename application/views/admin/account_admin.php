@@ -56,7 +56,7 @@
                             <!-- Form Register -->
                             <form action="<?=base_url('admin/delete_admin/').$admins_acc->user_id.'/'.$admins_acc->status?>" method="post">
                               <div class="modal-body">
-                                Are you sure you want to <?=$admins_acc->status == 0 ? 'Unblock' : 'Block' ?> fucking <b><?=$admins_acc->firstname." ".$admins_acc->lastname?></b> account?
+                                Are you sure you want to <?=$admins_acc->status == 0 ? 'Unblock' : 'Block' ?> <b><?=$admins_acc->firstname." ".$admins_acc->lastname?></b> account?
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>

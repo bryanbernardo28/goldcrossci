@@ -7,7 +7,7 @@
   <div class="register-box-body">
     <p class="login-box-msg">Register a new account</p>
 
-    <form action="<?=base_url('adminlogin/register')?>" method="post">
+    <form action="<?=base_url('admin/register')?>" method="post">
       <div class="form-group has-feedback  <?php if(!empty(form_error('fname'))): ?> has-error <?php endif?>">
         <input type="fname" class="form-control" placeholder="First name">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>

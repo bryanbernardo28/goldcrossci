@@ -14,7 +14,7 @@ Purchase:
 
 <head>
     <meta charset="utf-8" />
-    <title>Security Guard HTML5 Template </title>
+    <title>Gold Cross Security Agency </title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta name="description" content="security guard" />
     <meta name="keywords" content="security guard/guard team/bodyguard" />
@@ -61,37 +61,41 @@ Purchase:
                                     <div class="item">
                                         <div class="top_heading_slide">
                                             <ul>
-                                                <li><i class="flaticon-security-camera"></i> Wel-come to <a href="#">Security Guard.</a> <span class="hidden-sm hidden-xs">- We care About your selfty</span></li>
+                                                <li><i class="flaticon-security-camera"></i> Welcome to <a href="#">Gold Cross Security Agency.</a> <span class="hidden-sm hidden-xs">- We care About your saftey</span></li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="item">
                                         <div class="top_heading_slide">
                                             <ul>
-                                                <li><i class="flaticon-security-camera"></i> Wel-come to <a href="#">Security Guard.</a> <span class="hidden-sm hidden-xs">- We care About your selfty</span></li>
+                                                <li><i class="flaticon-security-camera"></i> Welcome to <a href="#">Gold Cross Security Agency.</a> <span class="hidden-sm hidden-xs">- We care About your saftey</span></li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="item">
                                         <div class="top_heading_slide">
                                             <ul>
-                                                <li><i class="flaticon-security-camera"></i> Wel-come to <a href="#">Security Guard.</a> <span class="hidden-sm hidden-xs">- We care About your selfty</span></li>
+                                                <li><i class="flaticon-security-camera"></i> Welcome to <a href="#">Goldcross Security Agency.</a> <span class="hidden-sm hidden-xs">- We care About your saftey</span></li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+
+                       
+
+    
+
+                        
                         <div class="col-lg-6 col-md-5 col-xs-12 col-sm-12 top_icon_header">
 
-                            <div class="right-side float-right">
+                            <!-- div class="right-side float-right">
                                 <ul>
                                     <li><a href="#" class="tran3s round-border icon"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                    <li><a href="#" class="tran3s round-border icon"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                    <li><a href="#" class="tran3s round-border icon"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                                    <li><a href="#" class="tran3s round-border icon"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
                                 </ul>
-                            </div>
+                            </div> -->
                             <!-- /.right-side -->
 
                         </div>
@@ -113,28 +117,26 @@ Purchase:
                             <div class="logo float-left">
                                 <a href="index.html" style="vertical-align:middle;"><img src="<?=base_url()?>assets/images/logo_2.jpeg" height="100" width="170" alt="LOGO"></a>
                             </div>
-
-                            <form action="#" class="float-right search_div search_response">
-                                <input type="text" placeholder="Search here">
-                                <button><i class="fa fa-search" aria-hidden="true"></i></button>
-                            </form>
                         </div>
                     </div>
                 </div>
                 <div class="sc_navigation hidden-sm hidden-xs">
                     <nav id="primary-nav" class="dropdown">
                         <ul class="dropdown menu">
-                            <li><a href="<?=base_url()?>client/home" title="">Home</a>
+                            <li><a href="<?=base_url()?>user/" title="">Home</a>
                             </li>
-                            <li><a href="<?=base_url()?>client/about_us" title="">about us</a>
+                            <li><a href="<?=base_url()?>user/about_us" title="">about us</a>
                             </li>
-                            <li><a href="services.html" title="">services</a>
+                            <li>
+                                <a href="<?=base_url()?>user/job_posting">Jobs</a>
+                            </li>
+                            <!-- <li><a href="services.html" title="">services</a>
                                 <ul>
                                     <li><a href="services.html" title=""><i class="fa fa-gg"></i> services</a></li>
 									<li><a href="service_single.html" title=""><i class="fa fa-gg"></i> services single</a></li>
 
                                 </ul>
-                            </li>
+                            </li> -->
                           
                             <li><a href="blog_category.html" title="">blog</a>
                                 <ul>
@@ -161,24 +163,9 @@ Purchase:
                                         <ul class="nav">
                                             <li><a href="index.html">Home</a>
                                             </li>
-                                            <li><a href="<?=base_url()?>client/about_us">about us</a>
+                                            <li><a href="<?=base_url()?>user/about_us">about us</a>
                                             </li>
-                                            <li><a href="services.html">services</a>
-                                                <ul>
-                                                    <li><a href="services.html">services</a>
-                                                    </li>
-													  <li><a href="service_single.html">services single</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="pricing.html">pricing table</a>
-                                            </li>
-                                            <li><a href="shop_Category.html">shop </a>
-                                                <ul>
-                                                    <li><a href="shop_Category.html">shop category</a></li>
-													 <li><a href="shop_single.html">shop single</a></li>
-                                                </ul>
-                                            </li>
+                                            
 											  <li><a href="blog_category.html">blog </a>
                                                 <ul>
                                                     <li><a href="blog_category.html"> blog category</a></li>
@@ -202,4 +189,28 @@ Purchase:
         </div>
     </div>
     <!--header section end-->
+    <!--sc title section start-->
+        <div class="title_main_div">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="sc_tittle_cont_wrapper">
+                                <div class="sc_tittle_cont">
+                                    <h1>about us </h1>
+                                    <ul class="page-breadcrum">
+                                        <li><a href="index.html">Home</a>
+                                        </li>
+                                        <li class="icon_breamcum"> > </li>
+                                        <li>about us</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--sc title section start-->
     

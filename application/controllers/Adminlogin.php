@@ -46,31 +46,6 @@ class Adminlogin extends CI_Controller {
 		$this->load->view("admin/includes/footer_login");
 	}
 
-	public function register()
-	{
-		$this->load->view('admin/includes/header_login');
-		
-		
-
-		$this->form_validation->set_rules('fname','First name','required');
-		$this->form_validation->set_rules('lname','Last name','required');
-		$this->form_validation->set_rules('uname','Username','required');
-		$this->form_validation->set_rules('email','Email','required|valid_email');
-		$this->form_validation->set_rules('password','Password','required|alpha_numeric');
-		$this->form_validation->set_rules('password','Re-type password','required|alpha_numeric|matches[password]');
-
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->load->view('admin/register');	
-		}
-		else{
-			echo "SUCCESS";
-		}
-		$this->load->view('admin/includes/footer_login');
-
-
-	}
-
 	public function check_recaptcha($response){
 
 		if (!empty($response)) {
@@ -116,9 +91,37 @@ class Adminlogin extends CI_Controller {
 				$this->form_validation->set_message('check_recaptcha', 'reCaptcha is required');
             	return false;
         	}
-		}
-		
+		}	
 	}
+
+
+
+	public function register()
+	{
+		$this->load->view('admin/includes/header_login');
+		
+		
+
+		$this->form_validation->set_rules('fname','First name','required');
+		$this->form_validation->set_rules('lname','Last name','required');
+		$this->form_validation->set_rules('uname','Username','required');
+		$this->form_validation->set_rules('email','Email','required|valid_email');
+		$this->form_validation->set_rules('password','Password','required|alpha_numeric');
+		$this->form_validation->set_rules('password','Re-type password','required|alpha_numeric|matches[password]');
+
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->load->view('admin/register');	
+		}
+		else{
+			echo "SUCCESS";
+		}
+		$this->load->view('admin/includes/footer_login');
+
+
+	}
+
+	
 
 
 	public function forgotPassword()
