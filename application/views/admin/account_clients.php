@@ -27,6 +27,7 @@
                 <tr>
                   <th>Firstname</th>
                   <th>Lastname</th>
+                  <th>Company</th>
                   <th>Address</th>
                   <th>Age</th>
                   <th>Gender</th>
@@ -40,6 +41,7 @@
                   <tr>
                     <td><?=$admins_acc->firstname?></td>
                     <td><?=$admins_acc->lastname?></td>
+                    <td><?=$admins_acc->company_name?></td>
                     <td><?=$admins_acc->address?></td>
                     <td><?=$admins_acc->age?></td>
                     <td><?=$admins_acc->gender == 1 ? "Male" : "Female"?></td>

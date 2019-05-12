@@ -46,16 +46,26 @@ class Admin extends CI_Controller {
 
 		$firstname = $this->input->post('fname',true);
 		$lastname = $this->input->post('lname',true);
-		$username  = $this->input->post('uname',true);
+		$address = $this->input->post("address",true);	
+		$age = $this->input->post("age",true);	
 		$email = $this->input->post('email',true);
-		$password = $this->input->post('password',true);
-		$cpassword = $this->input->post('cpassword',true);
+		$gender = $this->input->post("gender",true);
+		$access = $this->input->post("access",true);
+		
 
-		$this->form_validation->set_rules('fname', 'Firstname', 'required');
-		$this->form_validation->set_rules('lname', 'Lastname', 'required');
+		$this->form_validation->set_rules('fname', 'Firstname', 'required|alpha_numeric');
+		$this->form_validation->set_rules('lname', 'Lastname', 'required|alpha_numeric');
+		$this->form_validation->set_rules('address', 'Address', 'required|alpha_numeric');
+		$this->form_validation->set_rules('age', 'Age', 'required|numeric');
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[accounts.email]');
-		$this->form_validation->set_rules('password', 'Password', 'required');
-		$this->form_validation->set_rules('cpassword', 'Confirm Password', 'required|matches[password]');
+		$this->form_validation->set_rules('gender', 'Gender', 'required|numeric');
+		$this->form_validation->set_rules('access', 'Access', 'required|numeric');
+
+		if ($access == 1) {
+			$company = $this->input->post("company",true);
+			$this->form_validation->set_rules('company', 'Company', 'required|numeric');
+			var_dump($this->input->post());
+		}
 
 		if ($this->form_validation->run() == FALSE) {
 			$this->load->view("admin/register");
@@ -73,55 +83,44 @@ class Admin extends CI_Controller {
 				'verification_code' => $verification_code,
 				];
 
-				$this->load->library('email');
+			$this->load->library('email');
          
-         $config = array(
-             'protocol'      => 'smtp',
-             'smtp_host'     => 'ssl://smtp.gmail.com',
-             'smtp_port'     => 465,
-             'smtp_user'     => "jsprbernardo@gmail.com",
-             'smtp_pass'     => "bernardopassword",
-             'mailtype'      => 'html',
-             'charset'       => 'utf-8'
-         );
+	        $config = array(
+	            'protocol'      => 'smtp',
+	            'smtp_host'     => 'ssl://smtp.gmail.com',
+	            'smtp_port'     => 465,
+	            'smtp_user'     => "jsprbernardo@gmail.com",
+	            'smtp_pass'     => "bernardopassword",
+	            'mailtype'      => 'html',
+	            'charset'       => 'utf-8'
+	        );
 
-         $this->email->initialize($config);
-         $this->email->set_newline("\r\n");
-         
-         $message = "<h1>Email Verification</h1>";
-         
-         $this->email->to($userinfo['username']); // TATANGGAP
-         $this->email->from('jsprbernardo@gmail.com'); // SENDER
-         $this->email->subject("CI Email Message");
-         
-         $data = array('name'=>"Valid User!",'message'=>$message ,'code'=>$verification_code);
-         
-         $this->email->message($this->load->view('email_message',$data,true));
-         
-         if($this->email->send() == FALSE){
-             echo $this->email->print_debugger();
-         }else{
-             echo "Email sent succesfully!";
-             $this->Gcsa_model->insert("accounts",$userinfo);
-             redirect("admin/register");
-
-         }
-
+	        $this->email->initialize($config);
+	        $this->email->set_newline("\r\n");
+	        
+	        $message = "<h1>Email Verification</h1>";
+	         
+	        $this->email->to($userinfo['username']); // TATANGGAP
+	        $this->email->from('jsprbernardo@gmail.com'); // SENDER
+	        $this->email->subject("CI Email Message");
+	         
+	        $data = array('name'=>"Valid User!",'message'=>$message ,'code'=>$verification_code);
+	         
+	        $this->email->message($this->load->view('email_message',$data,true));
+	         
+	        if($this->email->send() == FALSE){
+	            echo $this->email->print_debugger();
+	        }
+	        else{
+	            echo "Email sent succesfully!";
+	            $this->Gcsa_model->insert("accounts",$userinfo);
+	            redirect("admin/register");
+	        }
 		}
 		
 
 		$this->load->view("admin/includes/footer");
 	}
-
-
-
-
-
- 	public function verify(){
-        $code = $this->uri->segment(3);
-        $this->Gcsa_model->update('accounts',['status'=>1],['verification_code'=>$code]);
-        redirect('login');
-    }
 
 
 	
@@ -168,8 +167,7 @@ class Admin extends CI_Controller {
 			"acc_info"=> $userinfo,
 			"page_name"=> "account_client",
 		);
-
-		$account_admin = $this->Gcsa_model->fetchAll("accounts",array("account_access"=>3));
+		$account_admin = $this->Gcsa_model->fetchAllClient(3);
 		$datas = array("acc_admin"=>$account_admin);
 		$this->load->view("admin/includes/header",$uinfo);
 		$this->load->view("admin/account_clients",$datas);
@@ -204,55 +202,139 @@ class Admin extends CI_Controller {
 
 		$this->load->view("admin/includes/header",$uinfo);
 
+		$this->load->helper('string');
 		$firstname = $this->input->post('fname',true);
 		$lastname = $this->input->post('lname',true);
-		$address = $this->input->post('address',true);
-		$age= $this->input->post('age',true);
-		$gender = $this->input->post('genderspecific',true);
+		$address = $this->input->post("address",true);	
+		$age = $this->input->post("age",true);	
+		$email = $this->input->post('email',true);
+		$gender = $this->input->post("gender",true);
+		$access = $this->input->post("access",true);
+		$client_access = false;
+		$password = random_string('alnum',8);
 		
 
-		$this->form_validation->set_rules('fname', 'Firstname', 'required');
-		$this->form_validation->set_rules('lname', 'Lastname', 'required');
-		$this->form_validation->set_rules('address', 'Address', 'required');
-		$this->form_validation->set_rules('age', 'Age', 'required');
-		$this->form_validation->set_rules('genderspecific', 'Gender', 'required');
-		$this->form_validation->set_rules('access', 'Access', 'required');
-		$this->form_validation->set_rules('company', 'Company', 'required');
+		$this->form_validation->set_rules('fname', 'Firstname', 'required|alpha_numeric');
+		$this->form_validation->set_rules('lname', 'Lastname', 'required|alpha_numeric');
+		$this->form_validation->set_rules('address', 'Address', 'required|alpha_numeric_spaces');
+		$this->form_validation->set_rules('age', 'Age', 'required|numeric');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[accounts.email]');
+		$this->form_validation->set_rules('gender', 'Gender', 'required|numeric');
+		$this->form_validation->set_rules('access', 'Access', 'required|numeric');
+
+
+		if ($access == 3) {
+			$client_access = true;
+			$company = $this->input->post("company",true);
+			$this->form_validation->set_rules('company', 'Company', 'required|alpha_numeric_spaces');
+		}
+
 
 
 		if ($this->form_validation->run() == FALSE) {
 			$this->load->view("admin/add_account");
 		}
 		else{
-
-			$this->load->helper('string');
 			$verification_code = random_string('alnum',6);
-			$userinfo = [
 
-				'firstname' =>$firstname,
-				'lastname' => $lastname,
-				'home' => $address,
-				/*'email' => 	  $email,*/
-				'password' => $password,
-				'verification_code' => $verification_code,
-				];
-
-				/*$this->load->library('email');
+			$this->load->library('email');
          
-	         $config = array(
+	        $config = array(
 	            'protocol'      => 'smtp',
 	            'smtp_host'     => 'ssl://smtp.gmail.com',
 	            'smtp_port'     => 465,
-	            'smtp_user'     => "",
-	            'smtp_pass'     => "",
+	            'smtp_user'     => "jsprbernardo@gmail.com",
+	            'smtp_pass'     => "bernardopassword",
 	            'mailtype'      => 'html',
 	            'charset'       => 'utf-8'
-	         );*/
+	        );
 
-         $this->Gcsa_model->insert("accounts",$userinfo);
+	        $this->email->initialize($config);
+	        $this->email->set_newline("\r\n");
+	        
+	        $message = "<h1>Email Verification</h1>";
+	         
+	        $this->email->to($email); // TATANGGAP
+	        $this->email->from('jsprbernardo@gmail.com'); // SENDER
+	        $this->email->subject("CI Email Message");
+	         
+	        $data = array('name'=>"Valid User!",'message'=>$message ,'code'=>$verification_code,'tmp_pass' => $password,"access" => $access);
+         	
+         	$this->email->message($this->load->view('email_message',$data,true));
+	         
+	        
 
-			redirect("admin/add_account");
 
+            if ($client_access) {
+				$userinfo = [
+					'firstname' =>$firstname,
+					'lastname' => $lastname,
+					'address' => $address,
+					'age' => $age,
+	 				'email' => 	  $email,
+					'gender' => $gender,
+					'password' => sha1($password),
+					'account_access' => $access,
+					'verification_code' => $verification_code,
+					'registered_at' => time()
+				];
+
+				$acc_resp = $this->Gcsa_model->insert("accounts",$userinfo);
+				if ($acc_resp["affected_rows"] > 0) {
+					$acc_id = $acc_resp["insert_id"];
+					$companyinfo = [
+						'account_id' => $acc_id,
+						'company_name' => $company,
+						'company_added_at' => time(),
+						'company_updated_at' => time()
+					];
+					if ($this->Gcsa_model->insert("company",$companyinfo)["affected_rows"] > 0) {
+						if($this->email->send() == FALSE){
+				            echo $this->email->print_debugger();
+				        }
+				        else{
+				            echo "Email sent succesfully!";
+				            redirect("admin/add_account");
+				        }
+					}
+					else{
+						echo "Error inserting in company table";
+					}
+				}
+				else{
+					echo "Error inserting in accounts table";
+				}
+				
+
+			}
+			else{
+				$userinfo = [
+					'firstname' =>$firstname,
+					'lastname' => $lastname,
+					'address' => $address,
+					'age' => $age,
+	 				'email' => 	  $email,
+					'gender' => $gender,
+					'password' => sha1($password),
+					'account_access' => $access,
+					'verification_code' => $verification_code,
+					'registered_at' => time()
+				];
+				$acc_resp = $this->Gcsa_model->insert("accounts",$userinfo);
+				if ($acc_resp["affected_rows"] > 0) {
+					if($this->email->send() == FALSE){
+			            echo $this->email->print_debugger();
+			        }
+			        else{
+			            echo "Email sent succesfully!";
+			            redirect("admin/add_account");
+			        }
+				}
+				else{
+					echo "Error inserting in accounts table";
+				}
+			}
+	        
 		}
 
 		$this->load->view("admin/includes/footer");
@@ -373,12 +455,7 @@ class Admin extends CI_Controller {
 		}
 
 		$this->load->view("admin/includes/footer");
-
-
-
-
 	}
-
 
 
 	public function edit_employee(){

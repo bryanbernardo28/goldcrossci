@@ -73,9 +73,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div id="body">
 		<p><?=$message?></p>
 
-                <p>Please click the link below to verify your account.<br/>
-                    <a href="<?=base_url()?>verifyuser/verify/<?=$code?>">Verify</a>
-                </p>
+        <p>Please click the link below to verify your account.<br/>
+            <a href="<?=base_url()?>verify/verify_account/<?=$code?>/<?=$access?>">Verify</a>
+        </p>
+        <p>Your temporary password is <strong><?=$tmp_pass?></strong></p>
 	</div>
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>

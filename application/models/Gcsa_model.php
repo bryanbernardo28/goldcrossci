@@ -7,8 +7,11 @@ class Gcsa_model extends CI_Model{
 
 	public function insert($table,$data){
 		$this->db->insert($table,$data);
-
-		return $this->db->affected_rows();
+		$return_insert = [
+			'affected_rows' => $this->db->affected_rows(),
+			'insert_id' => $this->db->insert_id()
+		];
+		return $return_insert;
 		//$this->db->query("INSERT INTO ". $table." ".$data);
 	}
 
@@ -22,6 +25,24 @@ class Gcsa_model extends CI_Model{
 		// $this->db->order_by('schedule_date','asc');
 
 		$query = $this->db->get($table);
+		return ($query->num_rows() > 0 )? $query->result() : FALSE;
+		//return $query->result();
+	}
+
+
+	public function fetchAllClient($where=NULL){
+
+
+		if (!empty($where)) {
+			$this->db->where("a.account_access",$where);
+		}
+
+		// $this->db->order_by('schedule_date','asc');
+		$this->db->select("*");
+		$this->db->from("accounts a");
+		$this->db->join("company c","c.account_id = a.user_id");
+
+		$query = $this->db->get();
 		return ($query->num_rows() > 0 )? $query->result() : FALSE;
 		//return $query->result();
 	}
@@ -55,7 +76,7 @@ class Gcsa_model extends CI_Model{
 		return $this->db->affected_rows();
 	}
 
-	public function edit($table,$ndata,$id=NULL){
+	public function update($table,$ndata,$id=NULL){
 		// $this->db->set($ndata);
 		// $this->db->where('item_id',$id);
 		// $this->db->update($table);

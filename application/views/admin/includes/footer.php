@@ -241,34 +241,26 @@
 <script>
   $(document).ready(function(){
     $('#example1').DataTable();
-    $('#example2').DataTable();
+    $('#example2').DataTable();    
+    
 
-    // function fetch_data(){
+    // select for access
+    $("#select_access").on("change",function(){
+      var selected = $(this).val();
+      if (selected == 3) {
+        $("#input_company").removeClass("hidden");
+      }
+      else{
+        $("#input_company").addClass("hidden"); 
+      }
+    });
 
-    //   var dataTable = ('#user_data').DataTable({
-
-    //         "processing" : true;
-    //         "serverSide" : true;
-    //         "order"      : [];
-    //         "ajax"       :{
-
-    //               url : "account_admin.php",
-                  
-
-    //         }
-
-
-
-
-    //   });
-
-
-
-    // }
-
-
-
+    // regex for input type age
+    $("input[name=age]").on("input",function(){
+      this.value = this.value.replace(/[^0-9]/g, '');
+    });
   });
+
 </script>
 </body>
 </html>

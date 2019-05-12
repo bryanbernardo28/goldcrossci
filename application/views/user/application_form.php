@@ -8,10 +8,10 @@
                     <li><a href="#tab2" data-toggle="tab">Additional Data</a></li>
                     <li><a href="#tab3" data-toggle="tab">Education</a></li>
                     <li><a href="#tab4" data-toggle="tab">Employment Record</a></li>
-                <li><a href="#tab5" data-toggle="tab">Seminars / Training Attended</a></li>
-                <li><a href="#tab6" data-toggle="tab">General Information</a></li>
-                <li><a href="#tab7" data-toggle="tab">Other Information</a></li>
-                <li><a href="#tab8" data-toggle="tab">Instruction</a></li>
+                    <li><a href="#tab5" data-toggle="tab">Seminars / Training Attended</a></li>
+                    <li><a href="#tab6" data-toggle="tab">General Information</a></li>
+                    <li><a href="#tab7" data-toggle="tab">Other Information</a></li>
+                    <li><a href="#tab8" data-toggle="tab">Instruction</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab1">

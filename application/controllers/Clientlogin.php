@@ -17,33 +17,32 @@ class Clientlogin extends CI_Controller {
 	}
 
 
-	public function login()
-	{
+	public function login(){
+		echo "Client Login";
+		// $data = array('script' => $this->recaptcha->getScriptTag(),
+  //   				'widget' => $this->recaptcha->getWidget()
+  //   				);
+		// $this->load->view("user/includes/header_login");
 
-		$data = array('script' => $this->recaptcha->getScriptTag(),
-    				'widget' => $this->recaptcha->getWidget()
-    				);
-		$this->load->view("user/includes/header_login");
-
-		$this->form_validation->set_rules('clientemail', 'Email', 'required|valid_email');
-		$this->form_validation->set_rules('clientpass', 'Password', 'required');
-		$this->form_validation->set_rules('g-recaptcha-response',"CAPTCHA","required|callback_check_recaptcha");
+		// $this->form_validation->set_rules('clientemail', 'Email', 'required|valid_email');
+		// $this->form_validation->set_rules('clientpass', 'Password', 'required');
+		// $this->form_validation->set_rules('g-recaptcha-response',"CAPTCHA","required|callback_check_recaptcha");
 		
 
-		if ($this->form_validation->run() == FALSE) {
-			$this->load->view("user/login",$data);
-		}
-		else{
-			$email = $this->input->post("clientemail");
+		// if ($this->form_validation->run() == FALSE) {
+		// 	$this->load->view("user/login",$data);
+		// }
+		// else{
+		// 	$email = $this->input->post("clientemail");
  
-			//session
-			$userinfo = $this->Gcsa_model->fetchAll("accounts",array("email"=>$email));
-			$userinfo = $userinfo[0];
-			$this->session->isloggedinclient = true;
-			$this->session->clientemail = $userinfo->email;
-			redirect("user/index2");
-		}
-		$this->load->view("user/includes/footer_login");
+		// 	//session
+		// 	$userinfo = $this->Gcsa_model->fetchAll("accounts",array("email"=>$email));
+		// 	$userinfo = $userinfo[0];
+		// 	$this->session->isloggedinclient = true;
+		// 	$this->session->clientemail = $userinfo->email;
+		// 	redirect("user/index2");
+		// }
+		// $this->load->view("user/includes/footer_login");
 	}
 
 	public function check_recaptcha($response){

@@ -94,6 +94,12 @@ class Adminlogin extends CI_Controller {
 		}	
 	}
 
+	public function verify(){
+        $code = $this->uri->segment(3);
+        $this->Gcsa_model->update('accounts',['status'=>1],['verification_code'=>$code]);
+        redirect('login');
+    }
+
 
 
 	public function register()
