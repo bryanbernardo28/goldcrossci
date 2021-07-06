@@ -1,3 +1,7 @@
 textarea.disable-resize{
   resize: none;
 }
+
+li > a.text-treeview-small{
+	font-size: 12px;
+}

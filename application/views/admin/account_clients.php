@@ -15,10 +15,11 @@
     <!-- Main content -->
     <section class="content">
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-md-12">
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">Client Accounts</h3>
+               <a href="<?=base_url('admin/add_client')?>" class="btn btn-flat btn-primary">Add Account</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -29,7 +30,8 @@
                   <th>Lastname</th>
                   <th>Company</th>
                   <th>Address</th>
-                  <th>Age</th>
+                  <th>City</th>
+                  <th>Position</th>
                   <th>Gender</th>
                   <th>Action</th>
                 </tr>
@@ -41,26 +43,27 @@
                   <tr>
                     <td><?=$admins_acc->firstname?></td>
                     <td><?=$admins_acc->lastname?></td>
-                    <td><?=$admins_acc->company_name?></td>
+                    <td><?=$admins_acc->cc_name?></td>
                     <td><?=$admins_acc->address?></td>
-                    <td><?=$admins_acc->age?></td>
-                    <td><?=$admins_acc->gender == 1 ? "Male" : "Female"?></td>
+                    <td><?=$admins_acc->city?></td>
+                    <td><?=$admins_acc->position?></td>
+                    <td><?=$admins_acc->gender == 1 ? "Male" : "Female"?>
                     <td>
                       <a href="<?=base_url('admin/edit_client/').$admins_acc->user_id?>" class="btn btn-warning">EDIT</a>
-                      <button type="button" class="btn <?=$admins_acc->status == 0 ? 'btn-danger' : 'btn-defult' ?>" data-toggle="modal" data-target="#modal-default<?=$admins_acc->user_id?>"><?=$admins_acc->status == 0 ? 'Unblock' : 'Block' ?></button>
+                      <button type="button" class="btn <?=$admins_acc->status == 0 ? 'btn-danger' : 'btn-defult' ?>" data-toggle="modal" data-target="#modal-default<?=$admins_acc->user_id?>"><?=$admins_acc->status == 0 ? 'Activate' : 'Deactivate' ?></button>
                       <div class="modal fade" id="modal-default<?=$admins_acc->user_id?>">
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span></button>
-                              <h4 class="modal-title"><?=$admins_acc->status == 0 ? 'Unblock' : 'Block' ?> Account</h4>
+                              <h4 class="modal-title"><?=$admins_acc->status == 0 ? 'Activate' : 'Deactivate' ?> Account</h4>
                             </div>
                             <!-- Form Register -->
                             <form action="<?=base_url('admin/delete_client/').$admins_acc->user_id.'/'.$admins_acc->status?>"
                              method="post">
                               <div class="modal-body">
-                                Are you sure you want to <?=$admins_acc->status == 0 ? 'Unblock' : 'Block' ?> fucking <b><?=$admins_acc->firstname." ".$admins_acc->lastname?></b> account?
+                                Are you sure you want to <?=$admins_acc->status == 0 ? 'Activate' : 'Deactivate' ?>  <b><?=$admins_acc->firstname." ".$admins_acc->lastname?></b> account?
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>

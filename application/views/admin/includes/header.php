@@ -26,7 +26,9 @@
   <link rel="stylesheet" href="<?=base_url()?>/assets/dist/css/skins/_all-skins.min.css">
 
   <link rel="stylesheet" type="text/css" href="<?=base_url()?>/assets/css/admin_style.css">
-
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css">
+  <link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/select2/css/select2.css">
+  <link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/select2/css/select2-bootstrap.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -36,18 +38,26 @@
 
   <!-- Google Font -->
   <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"> -->
+
+  <style type="text/css">
+    .col-centered{
+      float: none;
+      margin: 0 auto;
+    }
+    .top-buffer { margin-top:20px; }
+  </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 
-
+<?php date_default_timezone_set("Asia/Manila"); ?>
 <div class="wrapper">
 
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><b>A</b></span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>Admin</b></span>
     </a>
@@ -61,213 +71,16 @@
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          <!-- Messages: style can be found in dropdown.less-->
-          <li class="dropdown messages-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-fw fa-suitcase"></i>
-              <span class="label label-success">4</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 4 messages</li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                <ul class="menu">
-                  <li><!-- start message -->
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        Support Team
-                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                  <!-- end message -->
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        AdminLTE Design Team
-                        <small><i class="fa fa-clock-o"></i> 2 hours</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        Developers
-                        <small><i class="fa fa-clock-o"></i> Today</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        Sales Department
-                        <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        Reviewers
-                        <small><i class="fa fa-clock-o"></i> 2 days</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="footer"><a href="#">See All Messages</a></li>
-            </ul>
-          </li>
-          <!-- Notifications: style can be found in dropdown.less -->
-          <li class="dropdown notifications-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">10</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                <ul class="menu">
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                      page and may cause design problems
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-users text-red"></i> 5 new members joined
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-user text-red"></i> You changed your username
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="footer"><a href="#">View all</a></li>
-            </ul>
-          </li>
-          <!-- Tasks: style can be found in dropdown.less -->
-          <li class="dropdown tasks-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-flag-o"></i>
-              <span class="label label-danger">9</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 9 tasks</li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                <ul class="menu">
-                  <li><!-- Task item -->
-                    <a href="#">
-                      <h3>
-                        Design some buttons
-                        <small class="pull-right">20%</small>
-                      </h3>
-                      <div class="progress xs">
-                        <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"
-                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                          <span class="sr-only">20% Complete</span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <!-- end task item -->
-                  <li><!-- Task item -->
-                    <a href="#">
-                      <h3>
-                        Create a nice theme
-                        <small class="pull-right">40%</small>
-                      </h3>
-                      <div class="progress xs">
-                        <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar"
-                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                          <span class="sr-only">40% Complete</span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <!-- end task item -->
-                  <li><!-- Task item -->
-                    <a href="#">
-                      <h3>
-                        Some task I need to do
-                        <small class="pull-right">60%</small>
-                      </h3>
-                      <div class="progress xs">
-                        <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar"
-                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                          <span class="sr-only">60% Complete</span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <!-- end task item -->
-                  <li><!-- Task item -->
-                    <a href="#">
-                      <h3>
-                        Make beautiful transitions
-                        <small class="pull-right">80%</small>
-                      </h3>
-                      <div class="progress xs">
-                        <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar"
-                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                          <span class="sr-only">80% Complete</span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <!-- end task item -->
-                </ul>
-              </li>
-              <li class="footer">
-                <a href="#">View all tasks</a>
-              </li>
-            </ul>
-          </li>
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="<?=base_url('assets/images/default_avatar.png')?>" class="user-image" alt="User Image">
+              <img src="<?=base_url('assets/profile_pictures/').$acc_info->image?>" class="user-image" alt="User Image">
               <span class="hidden-xs"><?=$acc_info->firstname." ".$acc_info->lastname?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="<?=base_url('assets/images/default_avatar.png')?>" class="img-circle" alt="User Image">
+                <img src="<?=base_url('assets/profile_pictures/').$acc_info->image?>" class="img-circle" alt="User Image">
 
                 <p>
                   <?=$acc_info->firstname." ".$acc_info->lastname?>
@@ -276,24 +89,10 @@
                 </p>
               </li>
               <!-- Menu Body -->
-              <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
-                  </div>
-                </div>
-                <!-- /.row -->
-              </li>
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="<?=base_url('admin/admin_profile')?>" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="<?=base_url('admin/signout')?>" class="btn btn-default btn-flat">Sign out</a>
@@ -302,9 +101,9 @@
             </ul>
           </li>
           <!-- Control Sidebar Toggle Button -->
-          <li>
+          <!-- <li>
             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-          </li>
+          </li> -->
         </ul>
       </div>
 
@@ -317,7 +116,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<?=base_url('assets/images/default_avatar.png')?>" class="img-circle" alt="User Image">
+          <img src="<?=base_url('assets/profile_pictures/').$acc_info->image?>" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p><?=$acc_info->firstname." ".$acc_info->lastname?></p>
@@ -325,71 +124,148 @@
         </div>
       </div>
       <!-- search form -->
-      <!-- <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-          <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat">
-                  <i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
-      </form> -->
+      
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="<?=$page_name === 'index2' ? 'active':''?>">
-          <a href="<?=base_url('admin/index2')?>">
+        <li class="<?=$page_name === 'dashboard' ? 'active':''?>">
+          <a href="<?=base_url('admin/dashboard')?>">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
           </a>
         </li>
         
         
-        <li class="treeview">
+        
+        
+        
+        <li class="<?= $page_name === 'account_admin' || $page_name === 'account_employees' || $page_name === 'account_client'|| $page_name === 'account_applicant' || $page_name === 'with_exp' || $page_name === 'without_exp' || $page_name === 'add_account' || $page_name === 'account_pinformation' || $page_name === 'account_detachment' ? 'active treeview menu-open' : 'treeview'  ?>">
           <a href="#">
-            <i class="fa fa-pie-chart"></i>
-            <span>Client's Analysis</span>
+            <i class="fa fa-table"></i> <span>User Accounts</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
+            <li class="<?= $page_name  === 'with_exp' || $page_name  === 'without_exp' ? 'active treeview menu-open':'treeview' ?>">
+              <a href="#"><i class="fa fa-circle-o"></i> Applicants
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              
+              <ul class="treeview-menu">
+                <li class="<?= $page_name  === 'with_exp' ? 'active':'' ?>">
+                  <a href="<?=base_url('admin/with_exp')?>"><i class="fa fa-circle-o"></i> With Experience</a>
+                </li>
+
+                <li class="<?= $page_name  === 'without_exp' ? 'active':'' ?>">
+                  <a href="<?=base_url('admin/without_exp')?>"><i class="fa fa-circle-o"></i> Without Experience</a>
+                </li>
+              </ul>
+
+
+
+
+            </li>
+
+            <li class="<?= $page_name === 'account_admin' ? 'active':''  ?>"><a href="<?=base_url('admin/account_admin')?>"><i class="fa fa-circle-o"></i> Admin</a> </li>
+            
+            <li class="<?= $page_name  === 'account_pinformation' || $page_name  === 'account_detachment' ? 'active treeview menu-open':'treeview' ?>">
+              <a href="#"><i class="fa fa-circle-o"></i> Employees
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li class="<?= $page_name  === 'account_pinformation' ? 'active':'' ?>">
+                  <a href="<?=base_url('admin/account_pinformation')?>"><i class="fa fa-circle-o"></i> Personal Information</a>
+                </li>
+              </ul>
+            </li>
           </ul>
         </li>
         
-        
-        <li class="<?= $page_name === 'account_admin' || $page_name === 'account_employees' || $page_name === 'account_client'|| $page_name === 'account_applicant' || $page_name === 'add_account'? 'active treeview menu-open' : 'treeview'  ?>">
-          <a href="#">
-            <i class="fa fa-table"></i> <span>Accounts</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="<?= $page_name === 'add_account' ? 'active':''  ?>"><a href="<?=base_url('admin/add_account')?>"><i class="fa fa-circle-o"></i> Add Account</a></li>
-            <li class="<?= $page_name === 'account_admin' ? 'active':''  ?>"><a href="<?=base_url('admin/account_admin')?>"><i class="fa fa-circle-o"></i> Admin</a></li>
-            <li class="<?= $page_name  === 'account_employees' ? 'active':'' ?>"><a href="<?=base_url('admin/account_employees')?>"><i class="fa fa-circle-o"></i> Employees</a></li>
-            <li class="<?= $page_name  === 'account_client' ? 'active':'' ?>"><a href="<?=base_url('admin/account_client')?>"><i class="fa fa-circle-o"></i> Client</a></li>
-            <li class="<?= $page_name  === 'account_applicant' ? 'active':'' ?>"><a href="<?=base_url('admin/account_applicant')?>"><i class="fa fa-circle-o"></i> Applicant</a></li>
-          </ul>
-        </li>
-        <li class="<?=$page_name === 'assessment' ? 'active':''?>">
-          <a href="<?=base_url('admin/assessment')?>">
-            <i class="fa fa-fw fa-pencil-square-o"></i> <span>Assessment</span>
-          </a>
-        </li>
         <li class="<?=$page_name === 'jobs' ? 'active':''?>">
           <a href="<?=base_url('admin/jobs')?>">
             <i class="fa fa-fw fa-suitcase"></i> <span>Jobs</span>
-            <!-- <span class="pull-right-container">
-              <small class="label pull-right bg-yellow">12</small>
-              <small class="label pull-right bg-green">16</small>
-              <small class="label pull-right bg-red">5</small>
-            </span> -->
           </a>
         </li>
+
+        <li class="<?= $page_name === 'examinee' || $page_name === 'exam_questions' || $page_name === 'add_exam_questions' ? 'active treeview menu-open' : 'treeview'  ?>">
+          <a href="#">
+            <i class="fa fa-fw fa-pencil-square-o"></i>
+            <span>Exams</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="<?= $page_name  === 'examinee' ? 'active':'' ?>">
+              <a href="<?=base_url('admin/examinee')?>"> <i class="fa fa-circle-o"> </i> Examinees </a> 
+            </li>
+            <li class="<?= $page_name  === 'exam_questions' || $page_name === 'add_exam_questions' ? 'active':'' ?>">
+              <a href="<?=base_url('admin/exam_questions')?>"> <i class="fa fa-circle-o"> </i> Exam Questions </a> 
+            </li>
+          </ul>
+        </li>
+           
+        <li class="<?=$page_name === 'archives' ? 'active':''?>">
+          <a href="<?=base_url('admin/archives')?>">
+            <i class="glyphicon glyphicon-inbox"></i> <span> Archives </span>
+          </a>
+        </li>
+
+
+        <li class="<?= $page_name === 'floater'  ? 'active treeview menu-open' : 'treeview'  ?>">
+          <a href="#">
+            <i class="fa fa-fw fa-pencil-square-o"></i>
+            <span>Floater</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="<?= $page_name  === 'floater' ? 'active':'' ?>">
+              <a href="<?=base_url('admin/floater')?>"> <i class="fa fa-circle-o"> </i> View Hired Applicants </a> 
+            </li>
+          </ul>
+        </li>
+
+
+        
+
+        <?php  
+        $var_is_active = ['list_hired','list_clients','list_current_emp','list_applicants'];
+        $is_in_array_active = in_array($page_name,$var_is_active) ? 'active treeview menu-open' : 'treeview';
+        ?>
+
+        <li class="<?=$is_in_array_active?>">
+          <a href="#">
+            <i class="glyphicon glyphicon-equalizer"></i> <span>Reports</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="<?=$page_name === 'list_hired' ? 'active':''?>">
+              <a href="<?=base_url('admin/list_hired')?>">
+                <i class="fa fa-asterisk"></i> <span>List of Hired Applicants</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <?php  
+        $page_name_array = ["text_message"];
+        $is_active = in_array($page_name,$page_name_array) ? "active" : "" ;
+        ?>
+        <li class="<?=$is_active?>">
+          <a href="<?=base_url('admin/text_message')?>">
+            <i class="fa fa-fw fa-suitcase"></i> <span>Text Message</span>
+          </a>
+        </li>
+
         
         
        

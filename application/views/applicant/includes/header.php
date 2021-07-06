@@ -116,7 +116,7 @@ Purchase:
                     <div class="container">
                         <div class="row">
                             <div class="logo float-left">
-                                <a href="index.html" style="vertical-align:middle;"><img src="<?=base_url()?>assets/images/logo_2.jpeg" height="100" width="170" alt="LOGO"></a>
+                                <a href="index.html" style="vertical-align:middle;"><img src="<?=base_url()?>assets/images/bg-02.jpg" height="100" width="170" alt="LOGO"></a>
                             </div>
                         </div>
                     </div>
@@ -139,14 +139,14 @@ Purchase:
                                 </ul>
                             </li> -->
                           
-                            <li><a href="blog_category.html" title="">blog</a>
+                            <!-- <li><a href="blog_category.html" title="">blog</a>
                                 <ul>
                                     <li><a href="blog_category.html" title=""><i class="fa fa-gg"></i> blog category</a></li>
 									 <li><a href="blog_single.html" title=""><i class="fa fa-gg"></i> blog single</a></li>
                                 </ul>
-                            </li>
-                            <li><a href="contact_us.html" title="">Contact us</a>
-                            </li>
+                            </li> -->
+                            <!-- <li><a href="contact_us.html" title="">Contact us</a>
+                            </li> -->
                         </ul>
                     </nav>
                     <!-- Menu -->
@@ -191,6 +191,9 @@ Purchase:
     </div>
     <!--header section end-->
     <!--sc title section start-->
+        <?php
+        if ($breadcrum_title !=  "hide") {
+        ?>
         <div class="title_main_div">
             <div class="container">
                 <div class="row">
@@ -198,12 +201,12 @@ Purchase:
                         <div class="row">
                             <div class="sc_tittle_cont_wrapper">
                                 <div class="sc_tittle_cont">
-                                    <h1>about us </h1>
+                                    <h1><?=$breadcrum_title?> </h1>
                                     <ul class="page-breadcrum">
                                         <li><a href="index.html">Home</a>
                                         </li>
                                         <li class="icon_breamcum"> > </li>
-                                        <li>about us</li>
+                                        <li><?=$breadcrum_title?></li>
                                     </ul>
                                 </div>
                             </div>
@@ -212,6 +215,9 @@ Purchase:
                 </div>
             </div>
         </div>
+        <?php
+        }
+        ?>
     </div>
     <!--sc title section start-->
     

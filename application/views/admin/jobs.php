@@ -1,4 +1,4 @@
-<?php date_default_timezone_set("Asia/Manila"); ?>
+
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -102,4 +102,3 @@
   </section>
   <!-- /.content -->
 </div>
-<!-- /.content-wrapper  

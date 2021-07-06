@@ -26,8 +26,8 @@ class Adminlogin extends CI_Controller {
 		$this->load->view("admin/includes/header_login");
 
 		$this->form_validation->set_rules('adminemail', 'email', 'required|valid_email');
-		$this->form_validation->set_rules('adminpass', 'Password', 'required');
-		$this->form_validation->set_rules('g-recaptcha-response',"CAPTCHA","required|callback_check_recaptcha");
+		$this->form_validation->set_rules('adminpass', 'Password', 'required|callback_check_recaptcha');
+		// $this->form_validation->set_rules('g-recaptcha-response','CAPTCHA','required|callback_check_recaptcha');
 		
 
 		if ($this->form_validation->run() == FALSE) {
@@ -48,9 +48,9 @@ class Adminlogin extends CI_Controller {
 
 	public function check_recaptcha($response){
 
-		if (!empty($response)) {
-			$response = $this->recaptcha->verifyResponse($response);
-			if ($response['success'] === TRUE) {
+		// if (!empty($response)) {
+		// 	$response = $this->recaptcha->verifyResponse($response);
+		// 	if ($response['success'] === TRUE) {
 				$adminid = $this->input->post("adminemail");
 				$password = $this->input->post("adminpass");
 				$userinfo = $this->Gcsa_model->fetchAll("accounts",array("email" => $adminid));
@@ -86,12 +86,12 @@ class Adminlogin extends CI_Controller {
 						return false;
 					}
 				}
-			}
-			else {
-				$this->form_validation->set_message('check_recaptcha', 'reCaptcha is required');
-            	return false;
-        	}
-		}	
+		// 	}
+		// 	else {
+		// 		$this->form_validation->set_message('check_recaptcha', 'reCaptcha is required');
+  //           	return false;
+  //       	}
+		// }	
 	}
 
 	public function verify(){
@@ -102,7 +102,7 @@ class Adminlogin extends CI_Controller {
 
 
 
-	public function register()
+	/*public function register()
 	{
 		$this->load->view('admin/includes/header_login');
 		
@@ -127,7 +127,7 @@ class Adminlogin extends CI_Controller {
 
 	}
 
-	
+	*/
 
 
 	public function forgotPassword()
@@ -158,12 +158,14 @@ class Adminlogin extends CI_Controller {
 	            $this->email->print_debugger();
 	        }
 	        else{
-	            $this->Gcsa_model->edit("accounts",array("password_code"=>$key),array("email"=>$email));
-	            redirect("Adminlogin/login");
+
+	            $this->Gcsa_model->update("accounts",array("password_code"=>$key),array("email"=>$email));
+	            redirect("adminlogin/login");
 	        }
 		}
 		$this->load->view("admin/includes/footer_login");
 	}
+
 
 	public function confirm_resetpass(){
 		if ($this->uri->segment(3) != null) {
@@ -182,7 +184,7 @@ class Adminlogin extends CI_Controller {
 				
 					$getcode = $this->Gcsa_model->fetchAll("accounts",array("password_code" => $passcode));				
 					if ($getcode) {
-						$this->Gcsa_model->edit("accounts",array("password"=>sha1($newpass)),array("password_code" => $passcode));
+					$this->Gcsa_model->update("accounts",array("password"=>sha1($newpass)),array("password_code" => $passcode));
 						redirect("adminlogin/login");
 					}
 

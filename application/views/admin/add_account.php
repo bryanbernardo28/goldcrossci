@@ -40,10 +40,10 @@
                   <span class="glyphicon glyphicon-map-marker form-control-feedback"></span>
                   <?=form_error('address','<span class="help-block">','</span>')?>
                 </div>
-                <div class="form-group has-feedback <?php if(!empty(form_error('age'))): ?> has-error <?php endif?>">
-                  <input type="text" name="age" class="form-control" value="<?=set_value('age');?>" placeholder="Age">
+                <div class="form-group has-feedback <?php if(!empty(form_error('position'))): ?> has-error <?php endif?>">
+                  <input type="text" name="position" class="form-control" value="<?=set_value('age');?>" placeholder="Position">
                   <span class="glyphicon glyphicon-heart form-control-feedback"></span>
-                  <?=form_error('age','<span class="help-block">','</span>')?>
+                  <?=form_error('position','<span class="help-block">','</span>')?>
                 </div>
                 <div class="form-group has-feedback <?php if(!empty(form_error('email'))): ?> has-error <?php endif?>">
                   <input type="email" name="email" class="form-control" value="<?=set_value('email');?>" placeholder="Email">
@@ -51,7 +51,7 @@
                   <?=form_error('email','<span class="help-block">','</span>')?>
                 </div>
 
-                <?php $gender = set_value("gender"); ?>
+                <!-- <?php $gender = set_value("gender"); ?>
                 <div class="form-group has-feedback <?php if(!empty(form_error('gender'))): ?> has-error <?php endif?>" >
                   <select class="form-control" name="gender">
                     <option value="" disabled <?= $gender=="" ? 'selected' : '' ?> >Gender</option>
@@ -59,7 +59,7 @@
                     <option value="2" <?=$gender=="2" ? 'selected' : '' ?> >Female</option>
                   </select>
                   <?=form_error('gender','<span class="help-block">','</span>')?>
-                </div>
+                </div> -->
 
                 <?php $access = set_value("access"); ?>
                 <div class="form-group has-feedback <?php if(!empty(form_error('access'))): ?> has-error <?php endif?>">

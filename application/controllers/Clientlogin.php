@@ -12,46 +12,48 @@ class Clientlogin extends CI_Controller {
 		$this->load->model("Gcsa_model");
 		$this->load->library('recaptcha');
 		if ($this->session->isloggedinclient) {
-		    redirect("Client/index2");
+		    redirect("Client/dashboard");
 		}
 	}
 
 
 	public function login(){
-		echo "Client Login";
-		// $data = array('script' => $this->recaptcha->getScriptTag(),
-  //   				'widget' => $this->recaptcha->getWidget()
-  //   				);
-		// $this->load->view("user/includes/header_login");
+		$data = array('script' => $this->recaptcha->getScriptTag(),
+    				'widget' => $this->recaptcha->getWidget()
+    				);
+		$this->load->view("client/includes/header_login");
 
-		// $this->form_validation->set_rules('clientemail', 'Email', 'required|valid_email');
-		// $this->form_validation->set_rules('clientpass', 'Password', 'required');
-		// $this->form_validation->set_rules('g-recaptcha-response',"CAPTCHA","required|callback_check_recaptcha");
+		$this->form_validation->set_rules('clientemail', 'Email', 'required|valid_email');
+		$this->form_validation->set_rules('clientpassword', 'Password', 'required');
+		$this->form_validation->set_rules('g-recaptcha-response',"CAPTCHA","callback_check_recaptcha");
 		
 
-		// if ($this->form_validation->run() == FALSE) {
-		// 	$this->load->view("user/login",$data);
-		// }
-		// else{
-		// 	$email = $this->input->post("clientemail");
+		if ($this->form_validation->run() == FALSE) {
+			$this->load->view("client/login",$data);
+		}
+		else{
+			$email = $this->input->post("clientemail");
  
-		// 	//session
-		// 	$userinfo = $this->Gcsa_model->fetchAll("accounts",array("email"=>$email));
-		// 	$userinfo = $userinfo[0];
-		// 	$this->session->isloggedinclient = true;
-		// 	$this->session->clientemail = $userinfo->email;
-		// 	redirect("user/index2");
-		// }
-		// $this->load->view("user/includes/footer_login");
+			//session
+			$userinfo = $this->Gcsa_model->fetchAll("accounts",array("email"=>$email));
+			$userinfo = $userinfo[0];
+
+			$this->session->isloggedinclient = true;
+			$this->session->set_userdata((array)$userinfo);
+			$this->session->clientemail = $userinfo->email;
+			$this->session->client_userid = $userinfo->user_id;
+			redirect("client/dashboard");
+		}
+		$this->load->view("client/includes/footer_login");
 	}
 
 	public function check_recaptcha($response){
 
-		if (!empty($response)) {
-			$response = $this->recaptcha->verifyResponse($response);
-			if ($response['success'] === TRUE) {
+		// if (!empty($response)) {
+		// 	$response = $this->recaptcha->verifyResponse($response);
+		// 	if ($response['success'] === TRUE) {
 				$clientid = $this->input->post("clientemail");
-				$password = $this->input->post("clientpass");
+				$password = $this->input->post("clientpassword");
 				$userinfo = $this->Gcsa_model->fetchAll("accounts",array("email" => $clientid));
 				if (!$userinfo) {
 					$this->form_validation->set_message('check_recaptcha', 'No account exist');
@@ -85,66 +87,12 @@ class Clientlogin extends CI_Controller {
 						return false;
 					}
 				}
-			}
-			else {
-				$this->form_validation->set_message('check_recaptcha', 'reCaptcha is required');
-            	return false;
-        	}
-		}	
-	}
-
-
-
-	public function register()
-	{
-		$this->load->view('user/includes/header_login');
-		
-		
-
-		$this->form_validation->set_rules('fname','First name','required');
-		$this->form_validation->set_rules('lname','Last name','required');
-		$this->form_validation->set_rules('uname','Username','required');
-		$this->form_validation->set_rules('email','Email','required|valid_email');
-		$this->form_validation->set_rules('password','Password','required|alpha_numeric');
-		$this->form_validation->set_rules('password','Re-type password','required|alpha_numeric|matches[password]');
-
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->load->view('user/register');	
-		}
-		else{
-
-			$this->load->helper('string');
-			$verification_code = random_string('alnum',6);
-			$userinfo = [
-
-				'firstname' =>$firstname,
-				'lastname' => $lastname,
-				'email' => 	  $email,
-				'password' => $password,
-				'verification_code' => $verification_code,
-				];
-
-				$this->load->library('email');
-         
-         $config = array(
-             'protocol'      => 'smtp',
-             'smtp_host'     => 'ssl://smtp.gmail.com',
-             'smtp_port'     => 465,
-             'smtp_user'     => "Lancebernardo_lb@yahoo.com",
-             'smtp_pass'     => "",
-             'mailtype'      => 'html',
-             'charset'       => 'utf-8'
-         );
-
-         $this->Gcsa_model->insert("accounts",$userinfo);
-
-			redirect("user/register");
-			echo "SUCCESS";
-		}
-		$this->load->view('user/includes/footer_login');
-
-
+		// 	}
+		// 	else {
+		// 		$this->form_validation->set_message('check_recaptcha', 'reCaptcha is required');
+  //           	return false;
+  //       	}
+		// }	
 	}
 
 	
@@ -152,13 +100,13 @@ class Clientlogin extends CI_Controller {
 
 	public function forgotPassword()
 	{
-		$this->load->view("user/includes/header_login");
+		$this->load->view("client/includes/header_login");
 
 		$this->form_validation->set_rules('femail', 'email', 'required|valid_email');
 		
 
 		if ($this->form_validation->run() == FALSE) {
-			$this->load->view("user/forgotpassword");
+			$this->load->view("client/forgotpassword");
 		}
 		else{
 
@@ -168,33 +116,33 @@ class Clientlogin extends CI_Controller {
 	        $email = $this->input->post("femail");
 
 
-			$this->email->from('Lancebernardo_lb@yahoo.com', 'NAME');
+			$this->email->from('Lancebernardo_lb@yahoo.com', 'GoldCross Reset Password');
 	        $this->email->to($email);
 
 	        $this->email->subject('Reset Password');
-	        $this->email->message($this->load->view('user/fpasspage',$data,true));
+	        $this->email->message($this->load->view('client/fpasspage',$data,true));
 	        
 	        if(!$this->email->send()){
 	            $this->email->print_debugger();
 	        }
 	        else{
-	            $this->Gcsa_model->edit("accounts",array("password_code"=>$key),array("email"=>$email));
-	            redirect("Clientlogin/login");
+	            $this->Gcsa_model->update("accounts",array("password_code"=>$key),array("email"=>$email));
+	            redirect("clientlogin/login");
 	        }
 		}
-		$this->load->view("user/includes/footer_login");
+		$this->load->view("client/includes/footer_login");
 	}
 
 	public function confirm_resetpass(){
 		if ($this->uri->segment(3) != null) {
-			$this->load->view("user/includes/header_login");
+			$this->load->view("client/includes/header_login");
 
 			$this->form_validation->set_rules('npassword', 'New Password', 'required|alpha_numeric');
 			$this->form_validation->set_rules('cpassword', 'Confirm Password', 'required|alpha_numeric|matches[npassword]');
 			$passcode = $this->uri->segment(3);
 
 			if ($this->form_validation->run() == FALSE) {
-				$this->load->view("user/rpasspage");
+				$this->load->view("client/rpasspage");
 			}
 			else{
 				
@@ -202,7 +150,7 @@ class Clientlogin extends CI_Controller {
 				
 					$getcode = $this->Gcsa_model->fetchAll("accounts",array("password_code" => $passcode));				
 					if ($getcode) {
-						$this->Gcsa_model->edit("accounts",array("password"=>sha1($newpass)),array("password_code" => $passcode));
+						$this->Gcsa_model->update("accounts",array("password"=>sha1($newpass)),array("password_code" => $passcode));
 						redirect("clientlogin/login");
 					}
 
@@ -210,7 +158,7 @@ class Clientlogin extends CI_Controller {
 
 
 			}
-			$this->load->view("user/includes/footer_login");
+			$this->load->view("client/includes/footer_login");
 		}
 		else{
 			redirect("clientlogin/login");

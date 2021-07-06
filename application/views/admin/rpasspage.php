@@ -1,11 +1,8 @@
-<body class="hold-transition login-page">
-<div class="login-box">
-  <div class="login-logo">
-    <a href="../../index2.html"><b>Gold Cross Security & Investigation Agency</b></a>
-  </div>
-  <!-- /.login-logo -->
-  <div class="login-box-body">
-    <p class="login-box-msg">Forgot Password</p>
+<body>
+<div class="limiter">
+
+  <div class="container-login100" style="background-image: url(<?=base_url('assets/images/bg-02.jpg')?>);">
+    <div class="wrap-login100 p-t-30 p-b-50">
     <form action="<?=base_url('adminlogin/confirm_resetpass/').$this->uri->segment(3)?>" method="post">
       <div class="form-group  has-feedback <?php if(!empty(form_error('npassword'))): ?> has-error <?php endif?>">
         <input type="password" class="form-control" name="npassword" placeholder="New Password">
@@ -20,12 +17,13 @@
       </div>
 
       <div class="row">
-        <div class="col-xs-4 pull-right">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Send</button>
+        <div class="container-login100-form-btn m-t-32">
+          <button type="submit" class="login100-form-btn">Send</button>
         </div>
         <!-- /.col -->
       </div>
     </form>
+    </div>
   </div>
   <!-- /.login-box-body -->
 </div>

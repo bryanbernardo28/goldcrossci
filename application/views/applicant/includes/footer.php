@@ -21,7 +21,7 @@
                                     Ermita, Manila, Philippines</span>
                                      
                                      
-                                    <div class="blog_date">February 28, 2019</div>
+                                    <!-- <div class="blog_date">February 28, 2019</div> -->
                                 </div>
                             </div>
                            
@@ -52,7 +52,7 @@
             <div class="row">
                 <div class="col-lg-8 col-md-8 col-xs-12 col-sm-6">
                     <div class="section5_copyright">
-                        <p>© 2019 Goldcross Security Agency | created by Hanijam</p>
+                        <p>© 2020 Goldcross Security Agency | WebApp 2 Project</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6">
@@ -107,18 +107,42 @@
     <!--js code-->
     <script type="text/javascript">
         $(document).ready(function(){
-            $('#datetimepicker1').datetimepicker({
+            $('#expiration_date').datetimepicker({
                  format: 'DD/MM/YYYY',
                  pickTime: false
             });
-            $('#datetimepicker2').datetimepicker({
+            $('#date_of_application').datetimepicker({
                  format: 'DD/MM/YYYY',
                  pickTime: false
             });
-            $('#datetimepicker3').datetimepicker({
+            $('#date_of_birth').datetimepicker({
                  format: 'DD/MM/YYYY',
                  pickTime: false
             });
+            $('#e_date_graduated').datetimepicker({
+                 format: 'DD/MM/YYYY',
+                 pickTime: false
+            });
+            $('#h_date_graduated').datetimepicker({
+                 format: 'DD/MM/YYYY',
+                 pickTime: false
+            });
+            $('#c_date_graduated').datetimepicker({
+                 format: 'DD/MM/YYYY',
+                 pickTime: false
+            });
+            $('#pg_date_graduated').datetimepicker({
+                 format: 'DD/MM/YYYY',
+                 pickTime: false
+            });
+            $('#sc_date_graduated').datetimepicker({
+                 format: 'DD/MM/YYYY',
+                 pickTime: false
+            });
+            
+            
+        
+
             $('.btnNext').click(function(){
               $('.nav-tabs > .active').next('li').find('a').trigger('click');
             });
@@ -126,8 +150,19 @@
               $('.btnPrevious').click(function(){
               $('.nav-tabs > .active').prev('li').find('a').trigger('click');
             });
+
+
+              $("input[name='exp']").change(function(){
+                if (this.value == "1") {
+                    $(".experience").removeClass("hidden");
+                }
+                else{
+                    $(".experience").addClass("hidden");
+                }
+              });
         });
     </script>
+    <script type="text/javascript" src="<?=base_url('assets/js/applicant/applicant.js')?>"></script>
 </body>
 
 </html>
