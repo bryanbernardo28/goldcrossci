@@ -35,7 +35,7 @@
                                         </div>
                                         <hr>
                                         <div class="form-group">
-                                            <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#modal-normal">Add Choices</button>
+                                            <button type="button" class="btn btn-info btn-flat modal-normal" >Add Choices</button>
                                             <div class="modal fade" id="modal-normal">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
@@ -47,76 +47,71 @@
                                                         <div class="modal-body">
                                                             <form>
                                                                 <div class="form-group">
-                                                                    <label for="exampleInputEmail1">Choice: </label>
-                                                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                                                                    <label for="choiceInput">Choice: </label>
+                                                                    <input type="text" class="form-control choice-input" id="choiceInput" placeholder="Choice">
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="exampleInputPassword1">Password</label>
-                                                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                                                    <label for="correctSelect">Is Correct: </label>
+                                                                    <select class="form-control is-correct-answer" id="correctSelect">
+                                                                        <option value="false" selected>No</option>
+                                                                        <option value="true">Yes</option>
+                                                                    </select>
                                                                 </div>
                                                             </form>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-primary btn-flat pull-left" data-dismiss="modal">Close</button>
-                                                            <button type="button" class="btn btn-success btn-flat">Save changes</button>
+                                                            <button type="button" class="btn btn-success btn-flat save-choice">Save</button>
                                                         </div>
                                                     </div>
                                                     <!-- /.modal-content -->
                                                 </div>
                                                 <!-- /.modal-dialog -->
                                             </div>
-                                            <table class="table table-responsive no-padding" style="margin-top:10px;">
+                                            <table class="table table-responsive no-padding choices" style="margin-top:10px;">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 10px">#</th>
                                                         <th>Choice</th>
                                                         <th>Correct Answer</th>
-                                                        <th>Action</th>
+                                                        <!-- <th>Action</th> -->
                                                     </tr>
                                                 </thead>
                                                 <tbody class="exam-table-body">
-                                                
+                                                    <!-- <tr>
+                                                        <td>1.</td>
+                                                        <td>Update software</td>
+                                                        <td>
+                                                            <input type="radio" name="correct[]">
+                                                        </td>
+                                                        <td><span class="badge bg-red">55%</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2.</td>
+                                                        <td>Clean database</td>
+                                                        <td>
+                                                            <input type="radio" name="correct[]">
+                                                        </td>
+                                                        <td><span class="badge bg-yellow">70%</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3.</td>
+                                                        <td>Cron job running</td>
+                                                        <td>
+                                                            <input type="radio" name="correct[]">
+                                                        </td>
+                                                        <td><span class="badge bg-light-blue">30%</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>4.</td>
+                                                        <td>Fix and squish bugs</td>
+                                                        <td>
+                                                            <input type="radio" name="correct[]">
+                                                        </td>
+                                                        <td><span class="badge bg-green">90%</span></td>
+                                                    </tr> -->
                                                 </tbody>
-                                                <!-- <tr>
-                                                    <td>1.</td>
-                                                    <td>Update software</td>
-                                                    <td>
-                                                        <div class="progress progress-xs">
-                                                        <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td><span class="badge bg-red">55%</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2.</td>
-                                                    <td>Clean database</td>
-                                                    <td>
-                                                        <div class="progress progress-xs">
-                                                        <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td><span class="badge bg-yellow">70%</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3.</td>
-                                                    <td>Cron job running</td>
-                                                    <td>
-                                                        <div class="progress progress-xs progress-striped active">
-                                                        <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td><span class="badge bg-light-blue">30%</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4.</td>
-                                                    <td>Fix and squish bugs</td>
-                                                    <td>
-                                                        <div class="progress progress-xs progress-striped active">
-                                                        <div class="progress-bar progress-bar-success" style="width: 90%"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td><span class="badge bg-green">90%</span></td>
-                                                </tr> -->
+                                                
                                             </table>
                                         </div>
                                         
