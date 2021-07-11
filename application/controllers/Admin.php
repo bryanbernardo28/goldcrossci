@@ -3579,6 +3579,7 @@ class Admin extends CI_Controller {
 			"lastname" => $info["lastname"],
 			"position" => $info["category"],
 			"email" => $info["contact_number"],
+			"gender" => (strtolower($info["gender"]) == "m" ? 1 : 0),
 			"password" => sha1("test"),
 			"status" => 1,
 			"account_access" => 2
