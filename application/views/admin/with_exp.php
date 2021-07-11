@@ -49,11 +49,8 @@
                       <button type="button" class="btn btn-success btn-send-sms-wexp" data-toggle="modal" data-target="#textModal<?=$exp_acc['id']?>">
                         SEND SMS
                       </button>
-                      
-
-                      <a href="<?=base_url('admin/pdf_withexp/'.$exp_acc['id'])?>" class="btn btn-info" target="_blank">VIEW APPLICATION FORM</a>
-                      
-           
+                      <a href="<?=base_url('assets/resume/'.$exp_acc['resume'])?>" class="btn btn-info" target="_blank" download>DOWNLOAD PDF</a>
+                      <!-- <a href="<?=base_url('admin/pdf_withexp/'.$exp_acc['id'])?>" class="btn btn-info" target="_blank" download>VIEW APPLICATION FORM</a> -->
                     </td> 
                   </tr>
                   <div class="modal modal-info fade" id="textModal<?=$exp_acc['id']?>" style="display: none;">

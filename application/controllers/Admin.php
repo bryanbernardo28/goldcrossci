@@ -808,7 +808,8 @@ class Admin extends CI_Controller {
 					"firstname" => $array_info["first_name"],
 					"gender" => $array_info["gender"],
 					"category" => $array_info["category"],
-					"contact_number" => $array_info['contact_no']
+					"contact_number" => $array_info['contact_no'],
+					"resume" => $table_val->applicant_resume
 				];
 				array_push($info,$data_info);
 			}
