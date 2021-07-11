@@ -30,7 +30,7 @@
                   <th>Position</th>
                   <th>Gender</th>
                   <!-- <th>Gender</th> -->
-                  <th>Action</th>
+                  <!-- <th>Action</th> -->
                 </tr>
                 </thead>
                 <tbody>
@@ -43,8 +43,8 @@
                     <td><?=$admins_acc->position?></td>
                     <td><?=$admins_acc->gender == 1 ? "Male" : "Female"?></td>
                     <td>
-                      <a href="<?=base_url('admin/edit_pinformation/').$admins_acc->user_id?>" class="btn btn-warning">EDIT</a>
-                      <button type="button" class="btn <?=$admins_acc->status == 0 ? 'btn-danger' : 'btn-defult' ?>" data-toggle="modal" data-target="#modal-default<?=$admins_acc->user_id?>"><?=$admins_acc->status == 0 ? 'Activate' : 'Deactivate' ?></button>
+                      <!-- <a href="<?=base_url('admin/edit_pinformation/').$admins_acc->user_id?>" class="btn btn-warning">EDIT</a> -->
+                      <!-- <button type="button" class="btn <?=$admins_acc->status == 0 ? 'btn-danger' : 'btn-defult' ?>" data-toggle="modal" data-target="#modal-default<?=$admins_acc->user_id?>"><?=$admins_acc->status == 0 ? 'Activate' : 'Deactivate' ?></button> -->
                       <div class="modal fade" id="modal-default<?=$admins_acc->user_id?>">
                         <div class="modal-dialog">
                           <div class="modal-content">

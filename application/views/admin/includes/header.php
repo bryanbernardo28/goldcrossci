@@ -218,9 +218,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="<?= $page_name  === 'examinee' ? 'active':'' ?>">
+            <!-- <li class="<?= $page_name  === 'examinee' ? 'active':'' ?>">
               <a href="<?=base_url('admin/examinee')?>"> <i class="fa fa-circle-o"> </i> Examinees </a> 
-            </li>
+            </li> -->
             <li class="<?= $page_name  === 'exam_questions' || $page_name === 'add_exam_questions' ? 'active':'' ?>">
               <a href="<?=base_url('admin/exam_questions')?>"> <i class="fa fa-circle-o"> </i> Exam Questions </a> 
             </li>
