@@ -37,8 +37,8 @@
                                 <div class="form-group col-md-2 <?php if(!empty(form_error('gender'))): ?> has-error <?php endif?>">
                                     <label for="city_contact_no" class="control-label">GENDER</label>
                                     <select class="form-control" name="gender" >
-                                      <option value="M">Male</option>
-                                      <option value="F">Female</option>
+                                      <option value="1">Male</option>
+                                      <option value="0">Female</option>
                                     </select>
                                 </div>
                             </div>

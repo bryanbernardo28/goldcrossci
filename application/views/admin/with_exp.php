@@ -42,7 +42,7 @@
                     <td><?=$exp_acc["firstname"]?></td>
                     <td><?=$exp_acc["lastname"]?></td>
                     <!-- <td><?=$exp_acc["address"]?></td> -->
-                    <td><?=$exp_acc["gender"] == "Male" ? "Male" : "Female"?></td>
+                    <td><?=$exp_acc["gender"] == "M" ? "Male" : "Female"?></td>
                     <td><?=$exp_acc["category"]?></td>
                     <td>
                       <!-- <button type="button" class="btn btn-success btn-send-sms"  id="<?=$exp_acc['contact_number']?>">SEND SMS</button> -->
