@@ -3312,8 +3312,8 @@ class Admin extends CI_Controller {
 			curl_setopt($ch, CURLOPT_URL, 'https://rest.nexmo.com/sms/json');
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POST, 1);
-			// curl_setopt($ch, CURLOPT_POSTFIELDS, "from=".$from."&text=".$message["text"]."&to=".$to."&api_key=240b1547&api_secret=Xfrhb9ITxal8Yco7"); //Bryan
-			curl_setopt($ch, CURLOPT_POSTFIELDS, "from=".$from."&text=".$message["text"]."&to=".$to."&api_key=8fc52ed2&api_secret=xi5dSwMplsFXfugd"); // Lance
+			curl_setopt($ch, CURLOPT_POSTFIELDS, "from=".$from."&text=".$message["text"]."&to=".$to."&api_key=240b1547&api_secret=Xfrhb9ITxal8Yco7"); //Bryan
+			// curl_setopt($ch, CURLOPT_POSTFIELDS, "from=".$from."&text=".$message["text"]."&to=".$to."&api_key=8fc52ed2&api_secret=xi5dSwMplsFXfugd"); // Lance
 
 
 			$headers = array();
