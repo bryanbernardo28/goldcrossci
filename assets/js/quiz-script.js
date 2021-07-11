@@ -1,7 +1,4 @@
-var currentQuestion = 0;
-var score = 0;
-var totQuestions = questions.length;
-
+var questions = {};
 var container = document.getElementById('quizContainer');
 var questionEl = document.getElementById('question');
 var labelopt1 = document.getElementById('label_opt1');
@@ -16,8 +13,23 @@ var opt4 = document.getElementById('opt4');
 var nextButton = document.getElementById('nextButton');
 var resultCont = document.getElementById('result');
 
+var currentQuestion = 0;
+var score = 0;
+var totQuestions = 0;
+
+
+$(function(){
+	$.get( base_url+"admin/exam_questions_api", function(data) {
+		questions = JSON.parse(data);
+		totQuestions = questions.length;
+		loadQuestion(currentQuestion);
+	});
+});
+
+
 function loadQuestion(questionIndex){
 	var q = questions[questionIndex];
+	var image = q.image_name;
 
 	questionEl.textContent = (questionIndex + 1) + '. ' + q.question;
 	labelopt1.textContent = q.option1;
@@ -30,9 +42,15 @@ function loadQuestion(questionIndex){
 	opt3.value = q.option3;
 	opt4.value = q.option4;
 
+	if(image != null){
+		// $("div#div_image").show();
+		$("img#question_img").attr("src", base_url+"assets/question_images/"+q.image_name);
+	}
+	
+
 };
 
-function loadNextQuestion (){
+function loadNextQuestion(){
 	var selectedOption = document.querySelector('input[type=radio]:checked');
 
 	if(!selectedOption){
@@ -42,7 +60,7 @@ function loadNextQuestion (){
 
 	var answer = selectedOption.value;
 	if (questions[currentQuestion].answer == answer) {
-		score += 5;
+		score += parseInt(questions[currentQuestion].points);
 	}
 	selectedOption.checked = false;
 	currentQuestion++;
@@ -56,7 +74,8 @@ function loadNextQuestion (){
 		$(".display_text").text("Thank you for taking the exam.");
 		var fname = $("#fname").val();
 		var lname = $("#lname").val();
-		var fetch_class = $.post(base_url+"Admin/submit_exam", { "score": score ,"fname":fname,"lname":lname}, function(data){
+		var sec_lic_no = $("#sec_lic_no").val();
+		var fetch_class = $.post(base_url+"Admin/submit_exam", { "score": score ,"fname":fname,"lname":lname,"sec_lic_no":sec_lic_no}, function(data){
 			console.log(data);
 		}, "json");
 
@@ -67,5 +86,5 @@ function loadNextQuestion (){
 
 
 }
-loadQuestion(currentQuestion);
+
 

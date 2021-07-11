@@ -19,21 +19,32 @@
                     <div class="box-header">
                         <h3 class="box-title">Add Exam Question</h3>
                     </div>
-                    <form action="<?=base_url('admin/add_account')?>" method="post">
+                    <form action="<?=base_url('admin/add_exam_question')?>" method="post" enctype="multipart/form-data">
                         <div class="box-body">
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-md-12" style="float: none;margin: 0 auto;">
-                                        <div class="form-group has-feedback  <?php if(!empty(form_error('fname'))): ?> has-error <?php endif?>">
+                                        <div class="form-group has-feedback  <?php if(!empty(form_error('question'))): ?> has-error <?php endif?>">
                                             <label>Question:</label>
-                                            <input type="text" name="fname" class="form-control" value="<?=set_value('fname');?>" placeholder="Question">
-                                            <?=form_error('fname','<span class="help-block">','</span>')?>
+                                            <input type="text" name="question" class="form-control" value="<?=set_value('question');?>" placeholder="Question">
+                                            <?=form_error('question','<span class="help-block">','</span>')?>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group has-feedback  <?php if(!empty(form_error('question_points'))): ?> has-error <?php endif?>">
+                                            <label>Question Points:</label>
+                                            <input type="text" name="question_points" class="form-control" value="<?=set_value('question_points');?>" placeholder="Question Points">
+                                            <?=form_error('question_points','<span class="help-block">','</span>')?>
+                                        </div>
+                                        <!-- <div class="form-group">
                                             <label for="exampleInputFile">Import image: </label>
-                                            <input type="file" id="exampleInputFile">
-                                        </div>
+                                            <input type="file" name="exam_image" id="exampleInputFile" accept="image/png, image/jpeg,image/jpg">
+                                        </div> -->
                                         <hr>
+                                        <?php if(!empty(form_error('choiceLetter[]')) || !empty(form_error('isCorrect'))){ ?>
+                                        <div class="alert alert-danger" role="alert">
+                                            <?php if(!empty(form_error('choiceLetter[]'))){ form_error('choiceLetter[]','<span>','</span>'); } ?>
+                                            <?=form_error('isCorrect','<span>','</span>')?>
+                                        </div>
+                                        <?php } ?>
                                         <div class="form-group">
                                             <button type="button" class="btn btn-info btn-flat modal-normal" >Add Choices</button>
                                             <div class="modal fade" id="modal-normal">
@@ -42,22 +53,21 @@
                                                         <div class="modal-header">
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span></button>
-                                                            <h4 class="modal-title">Info Modal</h4>
+                                                            <h4 class="modal-title">Add Choice</h4>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form>
-                                                                <div class="form-group">
-                                                                    <label for="choiceInput">Choice: </label>
-                                                                    <input type="text" class="form-control choice-input" id="choiceInput" placeholder="Choice">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="correctSelect">Is Correct: </label>
-                                                                    <select class="form-control is-correct-answer" id="correctSelect">
-                                                                        <option value="false" selected>No</option>
-                                                                        <option value="true">Yes</option>
-                                                                    </select>
-                                                                </div>
-                                                            </form>
+                                                            <div class="form-group">
+                                                                <label for="choiceInput">Choice: </label>
+                                                                <input type="text" class="form-control choice-input" id="choiceInput" placeholder="Choice">
+                                                                <span class="help-block hidden"></span>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="correctSelect">Is Correct: </label>
+                                                                <select class="form-control is-correct-answer" id="correctSelect">
+                                                                    <option value="false" selected>No</option>
+                                                                    <option value="true">Yes</option>
+                                                                </select>
+                                                            </div>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-primary btn-flat pull-left" data-dismiss="modal">Close</button>
@@ -71,47 +81,33 @@
                                             <table class="table table-responsive no-padding choices" style="margin-top:10px;">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 10px">#</th>
+                                                        <th class="col-md-2">#</th>
                                                         <th>Choice</th>
                                                         <th>Correct Answer</th>
-                                                        <!-- <th>Action</th> -->
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="exam-table-body">
-                                                    <!-- <tr>
-                                                        <td>1.</td>
-                                                        <td>Update software</td>
-                                                        <td>
-                                                            <input type="radio" name="correct[]">
-                                                        </td>
-                                                        <td><span class="badge bg-red">55%</span></td>
-                                                    </tr>
+                                                    <?php 
+                                                        if(!empty(set_value('choiceLetter'))){ 
+                                                            $choices = set_value('choiceLetter');
+                                                            $choicesText = set_value('choiceText');
+                                                            $isCorrect = set_value('isCorrect');
+                                                            foreach($choices as $choicesIndex => $choice){
+                                                    ?>
                                                     <tr>
-                                                        <td>2.</td>
-                                                        <td>Clean database</td>
+                                                        <td><input type="text" name="choiceLetter[]" value="<?=$choice?>" class="form-control" readonly></td>
+                                                        <td><input type='text' name='choiceText[]' value="<?=$choicesText[$choicesIndex]?>" class='form-control' readonly></td>
                                                         <td>
-                                                            <input type="radio" name="correct[]">
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="isCorrect" id="inlineRadio1" value="<?=$choice?>" <?=set_radio("isCorrect", $choice,false)?>> Correct Answer
+                                                            </label>
                                                         </td>
-                                                        <td><span class="badge bg-yellow">70%</span></td>
+                                                        <td><button type='button' class='btn btn-sm btn-danger btn-flat remove-choice' id="remove-<?=$choicesIndex+1?>">Remove</button></td>
                                                     </tr>
-                                                    <tr>
-                                                        <td>3.</td>
-                                                        <td>Cron job running</td>
-                                                        <td>
-                                                            <input type="radio" name="correct[]">
-                                                        </td>
-                                                        <td><span class="badge bg-light-blue">30%</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>4.</td>
-                                                        <td>Fix and squish bugs</td>
-                                                        <td>
-                                                            <input type="radio" name="correct[]">
-                                                        </td>
-                                                        <td><span class="badge bg-green">90%</span></td>
-                                                    </tr> -->
+                                                    <?php }} ?>
+
                                                 </tbody>
-                                                
                                             </table>
                                         </div>
                                         

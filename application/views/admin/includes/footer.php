@@ -8,6 +8,7 @@
 <!-- jQuery 3 -->
 
 <script src="<?=base_url()?>/assets/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="<?=base_url()?>/assets/js/jquery-ui.min.js"></script>
 
 <!-- Bootstrap 3.3.7 -->
 <script src="<?=base_url()?>/assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -50,7 +51,9 @@
   $(document).ready(function(){
     $('#example1').DataTable();
     $('#example2').DataTable();
-    
+    $('#question-datatable').DataTable({
+      lengthMenu: [5, 10,15 ,20],
+    });
 
     // select for access
     $("#select_access").on("change",function(){
@@ -163,7 +166,11 @@ if ($page_name == "view_forecast") {
 </script>
 <?php
 }else if($page_name === "add_exam_questions"){
+  
 ?>
+<script>
+  var base_url = "<?=base_url()?>";
+</script>
 <script src="<?=base_url('assets/js/exam/add_exam.js')?>"></script>
 <?php } ?>
 </body>

@@ -441,17 +441,13 @@ class Admin extends CI_Controller {
             die();
     	}
         else{
-        	$imageinfo = $this->upload->data();
-			$full_path = $imageinfo['full_path'];
-
-			// check EXIF and autorotate if needed
-			$this->load->library('image_autorotate', array('filepath' => $full_path));
 			
         	$image = $this->upload->data('file_name');
         	$config2['image_library'] = 'gd2';
 			$config2['source_image'] = './assets/profile_pictures/'.$image;
 			$config2['create_thumb'] = FALSE;
 			$config2['maintain_ratio'] = TRUE;
+			$config2['file_name'] = 'exam_image';
 			// $config2['width']         = 100;
 			// $config2['height']       = 100;
 			$this->load->library('image_lib', $config2);
@@ -810,7 +806,6 @@ class Admin extends CI_Controller {
 					"id" => $table_val->applicant_id,
 					"lastname" => $array_info["family_name"],
 					"firstname" => $array_info["first_name"],
-					// "address" => $array_info["city_address"],
 					"gender" => $array_info["gender"],
 					"category" => $array_info["category"],
 					"contact_number" => $array_info['contact_no']
@@ -846,7 +841,6 @@ class Admin extends CI_Controller {
 					"id" => $table_val->applicant_id,
 					"lastname" => $array_info["family_name"],
 					"firstname" => $array_info["first_name"],
-					"address" => $array_info["city_address"],
 					"gender" => $array_info["gender"],
 					"category" => $array_info["category"]
 				];
@@ -2765,6 +2759,7 @@ class Admin extends CI_Controller {
 				array_push($questionIds,$question->exam_question_id);
 			}
 			array_push($choices,$question->exam_choice_text);
+			$formatted_questions_details["question_id"] = $question->exam_question_id;
 			$formatted_questions_details["question"] = $question->exam_question_text;
 			$formatted_questions_details["choices"] = $choices;
 			
@@ -2784,15 +2779,176 @@ class Admin extends CI_Controller {
 	{
 		$userinfo = $this->Gcsa_model->fetchAll("accounts",array("email"=>$this->session->adminemail));
 		$userinfo = $userinfo[0];
-
+		$questionCount = $this->Gcsa_model->count_item("exam_questions");
 		$uinfo = array(
 			"acc_info"=> $userinfo,
 			"page_name"=> "add_exam_questions",
 		);
 
 		$this->load->view("admin/includes/header",$uinfo);
-		$this->load->view("admin/exam/add_exam_questions");
+
+		$this->form_validation->set_rules('question', 'Question', 'required');
+		$this->form_validation->set_rules('question_points', 'Question Points', 'required|numeric');
+		$this->form_validation->set_rules('choiceLetter[]', 'Choices', 'required');
+		$this->form_validation->set_rules('choiceText[]', 'Choice Text', 'required');
+		$this->form_validation->set_rules('isCorrect', 'Is Correct', 'required',array('required' => 'Please choose atleast 1 correct answer'));
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->load->view("admin/exam/add_exam_questions");
+		}
+		else{
+			$question = $this->input->post("question",true);
+			$questionPoints = $this->input->post("question_points",true);
+			$choiceLetters = $this->input->post("choiceLetter",true);
+			$choiceText = $this->input->post("choiceText",true);
+			$isCorrect = $this->input->post("isCorrect",true);
+			$questionCount = $this->Gcsa_model->count_item("exam_questions");
+			
+			$questionChoicesData = [];
+			$questionChoicesInsert = [];
+			foreach($choiceLetters as $choiceLetterIndex => $choiceLetter)
+			{
+				$questionChoicesData["exam_choice_text"] = $choiceText[$choiceLetterIndex];
+				$questionChoicesData["exam_choice_letter"] = $choiceLetter;
+				$isCorrectChoice = $isCorrect === $choiceLetter ? 1 : 0 ;
+				$questionChoicesData["exam_is_correct"] = $isCorrectChoice;
+				$questionChoicesInsert[] = $questionChoicesData;
+			}
+			$first_id = $this->Gcsa_model->insert_batch("exam_choices" , $questionChoicesInsert)["insert_id"];
+			$choicesExamCount = count($questionChoicesInsert);
+			$last_id = $first_id + ($choicesExamCount-1);
+			$questionNumber = $questionCount+1;
+			// if(!empty($_FILES['exam_image']['name'])){
+				
+			// 	// Question image upload start
+			// 	$image_name = "question".$questionNumber;
+			// 	$config['upload_path'] = './assets/question_images/';
+			// 	$config['allowed_types'] = 'jpg|png';
+			// 	$config['file_name'] = $image_name;
+			// 	// $config['max_size']             = 100;
+			// 	// $config['max_width']            = 1024;
+			// 	// $config['max_height']           = 768;
+
+			// 	$this->load->library('upload', $config);
+
+			// 	if (!$this->upload->do_upload('exam_image'))
+			// 	{
+			// 		print_r($this->upload->display_errors());
+			// 		echo $this->input->post('exam_image');
+			// 		die();
+			// 	}
+			// 	else
+			// 	{
+			// 		$fileName = pathinfo($_FILES["exam_image"]["name"], PATHINFO_EXTENSION);
+			// 		$questionInsert = array(
+			// 			"exam_question_number" => $questionNumber,
+			// 			"exam_question_text" => $question,
+			// 			"exam_question_points" => $questionPoints,
+			// 			"exam_question_image" => $image_name.".".$fileName
+			// 		);
+			// 		$question_id = $this->Gcsa_model->insert("exam_questions" , $questionInsert)["insert_id"];
+			// 		for($i = $first_id; $i <= $last_id; $i++){
+			// 			$where = array("exam_choice_id" => $i);
+			// 			$updateData = array("exam_question_id" => $question_id);
+			// 			$this->Gcsa_model->update("exam_choices" , $updateData,$where);
+			// 		}
+
+			// 		redirect("admin/exam_questions");
+			// 	}
+			// 	// Question image upload end
+			// }
+			// else{
+				
+			// }
+
+			$questionInsert = array(
+				"exam_question_number" => $questionNumber,
+				"exam_question_text" => $question,
+				"exam_question_points" => $questionPoints
+			);
+			$question_id = $this->Gcsa_model->insert("exam_questions" , $questionInsert)["insert_id"];
+			for($i = $first_id; $i <= $last_id; $i++){
+				$where = array("exam_choice_id" => $i);
+				$updateData = array("exam_question_id" => $question_id);
+				$this->Gcsa_model->update("exam_choices" , $updateData,$where);
+			}
+
+		}
 		$this->load->view("admin/includes/footer");
+	}
+
+	public function exam_questions_api()
+	{
+		$formatted_questions = array();
+		$all_questions = array();
+		$choices = array();
+		$formatted_questions = array();
+
+		$questions = $this->Gcsa_model->fetchAll("exam_questions");
+		foreach($questions as $question){
+			$choices = $this->Gcsa_model->fetchAll("exam_choices",array("exam_question_id" => $question->exam_question_id));
+
+			$formatted_questions["question"] = $question->exam_question_text;
+			$formatted_questions["points"] = $question->exam_question_points;
+			$formatted_questions["image_name"] = $question->exam_question_image;
+			foreach($choices as $choiceIndex => $choice)
+			{
+				$choiceText = $choice->exam_choice_text;
+				$answer = $choice->exam_is_correct;
+
+				$formatted_questions["option".($choiceIndex+1)] = $choiceText;
+				if($answer){
+					$formatted_questions["answer"] = $choiceText;
+				}
+			}
+			array_push($all_questions,$formatted_questions);
+
+		}
+		echo json_encode($all_questions);
+	}
+
+	public function update_exam_question()
+	{
+		$userinfo = $this->Gcsa_model->fetchAll("accounts",array("email"=>$this->session->adminemail));
+		$userinfo = $userinfo[0];
+		$uinfo = array(
+			"acc_info"=> $userinfo,
+			"page_name"=> "update_exam_question",
+		);
+
+		$exam_question = $this->uri->segment(3);
+
+		$question = $this->Gcsa_model->fetchAll("exam_questions",array("exam_question_id" => $exam_question));
+		$question = $question[0];
+
+		$body = array(
+			"question" => $question
+		);
+
+		$this->load->view("admin/includes/header",$uinfo);
+
+		$this->form_validation->set_rules('question', 'Question', 'required');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->load->view("admin/exam/update_exam_question",$body);
+		}
+		else{
+			$question = $this->input->post("question",true);
+			
+			$questionUpdate = array(
+				"exam_question_text" => $question,
+			);
+			$this->Gcsa_model->update("exam_questions" , $questionUpdate , array("exam_question_id"=>$exam_question));
+			redirect("admin/exam_questions");
+		}
+		$this->load->view("admin/includes/footer");
+	}
+
+	public function delete_question(){
+		$question_id = $this->uri->segment(3);
+		$this->Gcsa_model->delete("exam_questions",array("exam_question_id"=>$question_id));
+		$this->Gcsa_model->delete("exam_choices",array("exam_question_id"=>$question_id));
+		redirect("admin/exam_questions");
 	}
 
 	public function unpost_post_job(){

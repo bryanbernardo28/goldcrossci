@@ -26,10 +26,9 @@
                         </a>
                     </div>
                     <div class="box-body">
-                        <table id="example2" class="table table-bordered table-hover">
+                        <table id="question-datatable" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>Exam Number</th>
                                     <th>Exam Question</th>
                                     <th>Exam Choices</th>
                                     <th>Exam Action</th>
@@ -42,7 +41,6 @@
                                         
                             ?>
                             <tr>
-                                <td><?=$question_number?></td>
                                 <td><?=$formatted_question['question']?></td>
                                 <td>
                                     <ul>
@@ -58,9 +56,9 @@
                                     </ul>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-block btn-sm btn-primary btn-flat">Add Choice</button>
-                                    <button type="button" class="btn btn-block btn-sm  btn-info btn-flat">Update</button>
-                                    <button type="button" class="btn btn-block btn-sm  btn-danger btn-flat">Delete</button>
+                                    <a class="btn btn-block btn-sm btn-primary btn-flat" href="<?=base_url('admin/update_exam_question/').$formatted_question['question_id']?>">Update Question</a>
+                                    <!-- <button type="button" class="btn btn-block btn-sm  btn-info btn-flat">Update</button> -->
+                                    <a class="btn btn-block btn-sm  btn-danger btn-flat" href="<?=base_url('admin/delete_question/').$formatted_question['question_id']?>">Delete</a>
                                 </td>
                             </tr>
                             <?php
