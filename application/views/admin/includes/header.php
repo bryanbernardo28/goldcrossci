@@ -185,6 +185,23 @@
             </li>
           </ul>
         </li>
+        <li class="<?= $page_name === 'initial_interview' || $page_name === 'final_interview' ? 'active treeview menu-open' : 'treeview'  ?>">
+          <a href="#">
+            <i class="fa fa-fw fa-pencil-square-o"></i>
+            <span>Recruitment Process</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="<?= $page_name  === 'initial_interview' ? 'active':'' ?>">
+              <a href="<?=base_url('admin/initial_interview')?>"> <i class="fa fa-circle-o"> </i> Initial Interview </a> 
+            </li>
+            <li class="<?= $page_name  === 'final_interview' ? 'active':'' ?>">
+              <a href="<?=base_url('admin/final_interview')?>"> <i class="fa fa-circle-o"> </i> Final Interview </a> 
+            </li>
+          </ul>
+        </li>
         
         <li class="<?=$page_name === 'jobs' ? 'active':''?>">
           <a href="<?=base_url('admin/jobs')?>">
@@ -210,14 +227,14 @@
           </ul>
         </li>
            
-        <li class="<?=$page_name === 'archives' ? 'active':''?>">
+         <li class="<?=$page_name === 'archives' ? 'active':''?>">
           <a href="<?=base_url('admin/archives')?>">
             <i class="glyphicon glyphicon-inbox"></i> <span> Archives </span>
           </a>
         </li>
 
 
-        <li class="<?= $page_name === 'floater'  ? 'active treeview menu-open' : 'treeview'  ?>">
+        <!--<li class="<?= $page_name === 'floater'  ? 'active treeview menu-open' : 'treeview'  ?>">
           <a href="#">
             <i class="fa fa-fw fa-pencil-square-o"></i>
             <span>Floater</span>
@@ -230,7 +247,7 @@
               <a href="<?=base_url('admin/floater')?>"> <i class="fa fa-circle-o"> </i> View Hired Applicants </a> 
             </li>
           </ul>
-        </li>
+        </li> -->
 
 
         

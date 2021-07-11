@@ -106,14 +106,24 @@ class Gcsa_model extends CI_Model{
 		return ($query->num_rows() > 0 )? $query->result() : FALSE;
 	}
 
+	public function selectSum($table,$where)
+	{
+		$this->db->select_sum($where);
+		$result = $this->db->get($table)->row();  
+		return $result;
+	}
 
-	public function fetchAll($table,$where=NULL){
+
+	public function fetchAll($table,$where=NULL,$orderby = NULL){
 
 
 		if (!empty($where)) {
 			$this->db->where($where);	
 		}
 
+		if(!empty($orderby)){
+			$this->db->order_by($orderby[0],$orderby[1]);
+		}
 		// $this->db->order_by('schedule_date','asc');
 
 		$query = $this->db->get($table);

@@ -27,7 +27,7 @@
                 <tr>
                   <th>Firstname</th>
                   <th>Lastname</th>
-                  <th>Address</th>
+                  <th>Position</th>
                   <th>Gender</th>
                   <!-- <th>Gender</th> -->
                   <th>Action</th>
@@ -40,7 +40,7 @@
                   <tr>
                     <td><?=$admins_acc->firstname?></td>
                     <td><?=$admins_acc->lastname?></td>
-                    <td><?=$admins_acc->address?></td>
+                    <td><?=$admins_acc->position?></td>
                     <td><?=$admins_acc->gender == 1 ? "Male" : "Female"?></td>
                     <td>
                       <a href="<?=base_url('admin/edit_pinformation/').$admins_acc->user_id?>" class="btn btn-warning">EDIT</a>

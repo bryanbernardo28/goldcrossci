@@ -34,21 +34,18 @@
                     <th>Lastname</th>
                     <th>Gender</th>
                     <th>Applied Position</th>
-                    <th>Date Hired</th>
                   </tr>
                   </thead>
                   <tbody>
                     <?php
-                      if ($remarks) {
-                        foreach ($remarks as $remarks_value) {
-                          $apdata = json_decode($remarks_value->applicant_personal_data,true);
+                      if ($employees) {
+                        foreach ($employees as $employee) {
                     ?>
                     <tr>
-                      <td><?=$apdata["first_name"]?></td>
-                      <td><?=$apdata["family_name"]?></td>
-                      <td><?=$apdata["gender"]?></td>
-                      <td><?=$apdata["category"]?></td>
-                      <td><?=date("M d, Y",$remarks_value->date_hired)?></td>
+                      <td><?=$employee->firstname?></td>
+                      <td><?=$employee->lastname?></td>
+                      <td><?=($employee->gender == 1 ? "Male" : "Female")?></td>
+                      <td><?=$employee->position?></td>
                     </tr>
                     <?php
                       }}

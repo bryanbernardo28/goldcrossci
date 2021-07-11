@@ -45,12 +45,60 @@
                     <td><?=$exp_acc["gender"] == "Male" ? "Male" : "Female"?></td>
                     <td><?=$exp_acc["category"]?></td>
                     <td>
-                      <a href="#" class="btn btn-success">SEND SMS</a>
-                       <a href="<?=base_url('admin/pdf_withoutexp/'.$exp_acc['id'])?>" class="btn btn-info" target="_blank">VIEW APPLICATION FORM</a>
-                      
-           
+                      <!-- <button type="button" class="btn btn-success btn-send-sms"  id="<?=$exp_acc['contact_number']?>">SEND SMS</button> -->
+                      <button type="button" class="btn btn-success btn-send-sms-wexp" data-toggle="modal" data-target="#textModal<?=$exp_acc['id']?>">
+                        SEND SMS
+                      </button>
+                      <a href="<?=base_url('assets/resume/'.$exp_acc['resume'])?>" class="btn btn-info" target="_blank" download>DOWNLOAD PDF</a>
+                      <!-- <a href="<?=base_url('admin/pdf_withexp/'.$exp_acc['id'])?>" class="btn btn-info" target="_blank" download>VIEW APPLICATION FORM</a> -->
                     </td> 
                   </tr>
+                  <div class="modal modal-info fade" id="textModal<?=$exp_acc['id']?>" style="display: none;">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span></button>
+                          <h4 class="modal-title">SMS</h4>
+                        </div>
+                        <div class="modal-body">
+                          <form>
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div class="form-group has-feedback">
+                                  <label for="exampleInputEmail1">Contact Number: <?=$exp_acc['contact_number']?> <br>SMS Content</label>
+                                  <textarea class="form-control" id="my-sms-content" name="sms_content" rows="3" placeholder="SMS Content" style="resize: none;"><?=set_value('sms_content');?></textarea>
+                                  <?=form_error("sms_content","<span class='help-block'>","</span>")?>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div class="radio">
+                                  <label>
+                                    <input type="radio" name="sms_content_val" value="<?=$sms->wo_sms_content_passed?>" checked>
+                                    Passed
+                                  </label>
+                                </div>
+                                <div class="radio">
+                                  <label>
+                                    <input type="radio" name="sms_content_val" value="<?=$sms->wo_sms_content_failed?>">
+                                    Failed
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <!-- <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Send SMS</button> -->
+                          <button type="button" class="btn btn-outline pull-left btn-send-sms" data-dismiss="modal" id="<?=$exp_acc['contact_number']?>">Send SMS</button>
+                        </div>
+                      </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                  </div>
                   <?php
                   endforeach;
                   }

@@ -113,7 +113,7 @@ public function regex_check($str)
 			if(!empty($_FILES['resume']['name'])){
 				
 				// Question image upload start
-				$image_name = "resume_"."$lastname-$firstname";
+				$image_name = "resume_".preg_replace('/\s+/', '', $lastname)."-".preg_replace('/\s+/', '', $firstname);
 				$config['upload_path'] = './assets/resume/';
 				$config['allowed_types'] = 'pdf';
 				$config['file_name'] = $image_name;

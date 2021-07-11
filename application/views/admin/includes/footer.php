@@ -83,7 +83,7 @@
 <script type="text/javascript" src="<?=base_url('assets/js/client_rank_graph.js')?>"></script>
 <?php endif; ?>
 <?php
-if ($page_name === 'with_exp') {
+if ($page_name === 'with_exp' || $page_name === 'without_exp') {
 ?>
 <script type="text/javascript" src="<?=base_url('assets/js/sms_send.js')?>"></script>
 <?php

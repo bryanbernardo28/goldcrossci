@@ -2,8 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends CI_Controller {
-
-
 	function __construct(){
 		parent::__construct();
 		$this->load->library('form_validation');
@@ -42,12 +40,36 @@ class Admin extends CI_Controller {
 			"acc_info"=> $userinfo,
 			"page_name"=> "dashboard",
 		);
+
+		$questions = $this->Gcsa_model->selectSum("exam_questions","exam_question_points");
+		$q_points = $questions->exam_question_points;
+		
+		$applicant = $this->Gcsa_model->fetchAll("applicant",array("applicant_score !=" => null),array("applicant_score","desc"));
+		$info = [];
+		if ($applicant) {
+			foreach ($applicant as $table_val) {
+				$array_info =  json_decode($table_val->applicant_personal_data,true);
+				$data_info = [
+					"id" => $table_val->applicant_id,
+					"lastname" => $array_info["family_name"],
+					"firstname" => $array_info["first_name"],
+					"gender" => $array_info["gender"],
+					"category" => $array_info["category"],
+					"contact_number" => $array_info['contact_no'],
+					"exam_score" => $table_val->applicant_score,
+					"resume" => $table_val->applicant_resume
+				];
+				array_push($info,$data_info);
+			}
+		}
+
+		// $datas = array("applicants"=>$info,"total_points" => $q_points);
 		
 		$employees_cnt = $this->Gcsa_model->count_item("accounts",["account_access"=>2]);
 		$client_cnt = $this->Gcsa_model->count_item("accounts",["account_access"=>3]);
 		$top = $this->Gcsa_model->get_all_evals();
 
-		$body = ["top" => $top , "emp_cnt" => $employees_cnt,"client_cnt" => $client_cnt ];
+		$body = ["top" => $info , "emp_cnt" => $employees_cnt,"client_cnt" => count($applicant),"total_points" => $q_points ];
 		// $footer = ["data"=>$data];
 		$this->load->view('admin/includes/header', $uinfo);
 		$this->load->view('admin/index2',$body);
@@ -61,39 +83,55 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/includes/exam_footer');
 	}
 
+	public function samplelike()
+	{
+		$getinfo = $this->Gcsa_model->fetchAllLike("applicant",array("applicant_personal_data" => "010203040506"));
+		echo json_encode($getinfo);
+	}
+
 	public function submit_exam(){
 		$score = $this->input->post("score",true);
-		$fname = strtolower($this->input->post("fname",true));
-		$lname = strtolower($this->input->post("lname",true));
-		$getinfo = $this->Gcsa_model->fetchAll("applicant");
-		$infos = [];
+		// $fname = strtolower($this->input->post("fname",true));
+		// $lname = strtolower($this->input->post("lname",true));
+		$sec_lic_no = $this->input->post("sec_lic_no",true);
+		$likeMatch = array("applicant_personal_data" => $sec_lic_no);
+		$getinfo = $this->Gcsa_model->fetchAllLike("applicant",$likeMatch);
+		$getinfo = $getinfo[0];
+		$applicant_id = $getinfo->applicant_id;
 
-		foreach ($getinfo as $value) {
-			$pdata = json_decode($value->applicant_personal_data,true);
-			$fname2 = strtolower($pdata["first_name"]);
-			$lname2 = strtolower($pdata["family_name"]);
-			$fname2 = str_replace(' ', '', $fname2);
-			$lname2 = str_replace(' ', '', $lname2);
-			$fname = str_replace(' ', '', $fname);
-			$app_id = $value->applicant_id;
-			if ((strpos($fname2,$fname) !== false) && (strpos($lname2,$lname) !== false)) {
-				$remarks = "";
-				if ($score >= 60) {
-					$remarks = "Passed";
-				}
-				else{
-					$remarks = "Failed";
-				}
-				$data = [
-					"account_id" => $app_id,
-					"score" => $score,
-					"remarks" => $remarks,
-					"date_exam" => time()
-				];
-				$this->Gcsa_model->insert("remarks",$data);
-				echo json_encode(['score' => $score,'infos' => $infos]);			
-			}
-		}
+		$update_applicant_data = array(
+			"applicant_score" => $score,
+			"applicant_remarks" => 1, //0 - archives,1 - initial, 2 - final
+		);
+		$this->Gcsa_model->update("applicant",$update_applicant_data,array("applicant_id" => $applicant_id));
+		echo json_encode(['score' => $score,'applicant_id' => $applicant_id]);
+		// $infos = [];
+		// foreach ($getinfo as $value) {
+		// 	$pdata = json_decode($value->applicant_personal_data,true);
+		// 	$fname2 = strtolower($pdata["first_name"]);
+		// 	$lname2 = strtolower($pdata["family_name"]);
+		// 	$fname2 = str_replace(' ', '', $fname2);
+		// 	$lname2 = str_replace(' ', '', $lname2);
+		// 	$fname = str_replace(' ', '', $fname);
+		// 	$app_id = $value->applicant_id;
+		// 	if ((strpos($fname2,$fname) !== false) && (strpos($lname2,$lname) !== false)) {
+		// 		$remarks = "";
+		// 		if ($score >= 60) {
+		// 			$remarks = "Passed";
+		// 		}
+		// 		else{
+		// 			$remarks = "Failed";
+		// 		}
+		// 		$data = [
+		// 			"account_id" => $app_id,
+		// 			"score" => $score,
+		// 			"remarks" => $remarks,
+		// 			"date_exam" => time()
+		// 		];
+		// 		$this->Gcsa_model->insert("remarks",$data);
+		// 		echo json_encode(['score' => $score,'infos' => $infos]);			
+		// 	}
+		// }
 		
 	}
 
@@ -175,9 +213,9 @@ class Admin extends CI_Controller {
 			"page_name"=> "list_hired",
 		);
 
-		$get_remarks = $this->Gcsa_model->get_remarks_hired();
+		$employees = $this->Gcsa_model->fetchAll("accounts",array("account_access" => 2));
 
-		$body = ["remarks" => $get_remarks];
+		$body = ["employees" => $employees];
 
 		$this->load->view('admin/includes/header',$uinfo);
 		$this->load->view('admin/list_hired',$body);
@@ -347,9 +385,32 @@ class Admin extends CI_Controller {
 			"page_name"=> "archives",
 		);
 
-		$this->load->view('admin/includes/header',$uinfo);
-		$this->load->view('admin/archives');
-		$this->load->view('admin/includes/footer');
+		$questions = $this->Gcsa_model->selectSum("exam_questions","exam_question_points");
+		$q_points = $questions->exam_question_points;
+		
+		$applicant = $this->Gcsa_model->fetchAll("applicant",array("applicant_remarks" => 0));
+		$info = [];
+		if ($applicant) {
+			foreach ($applicant as $table_val) {
+				$array_info =  json_decode($table_val->applicant_personal_data,true);
+				$data_info = [
+					"id" => $table_val->applicant_id,
+					"lastname" => $array_info["family_name"],
+					"firstname" => $array_info["first_name"],
+					"gender" => $array_info["gender"],
+					"category" => $array_info["category"],
+					"contact_number" => $array_info['contact_no'],
+					"resume" => $table_val->applicant_resume
+				];
+				array_push($info,$data_info);
+			}
+		}
+
+		$datas = array("applicants"=>$info);
+
+		$this->load->view("admin/includes/header",$uinfo);
+		$this->load->view("admin/archives",$datas);
+		$this->load->view("admin/includes/footer");
 
 	}
 
@@ -843,12 +904,16 @@ class Admin extends CI_Controller {
 					"lastname" => $array_info["family_name"],
 					"firstname" => $array_info["first_name"],
 					"gender" => $array_info["gender"],
-					"category" => $array_info["category"]
+					"category" => $array_info["category"],
+					"contact_number" => $array_info['contact_no'],
+					"resume" => $table_val->applicant_resume
 				];
 				array_push($info,$data_info);
 			}
 		}
-		$datas = array("without_exp"=>$info);
+		$text_message = $this->Gcsa_model->fetchAll("sms");
+		$text_message = $text_message[0];
+		$datas = array("without_exp"=>$info,"sms" => $text_message);
 		$this->load->view("admin/includes/header",$uinfo);
 		$this->load->view("admin/without_exp",$datas);
 		$this->load->view("admin/includes/footer");
@@ -863,7 +928,7 @@ class Admin extends CI_Controller {
 		);
 
 
-		$account_admin = $this->Gcsa_model->fetchAll("accounts",array("account_access"=>2));
+		$account_admin = $this->Gcsa_model->fetchAll("accounts",array("account_access"=>2)); //2-employee
 		$datas = array("acc_admin"=>$account_admin);
 		$this->load->view("admin/includes/header",$uinfo);
 		$this->load->view("admin/account_pinformation",$datas);
@@ -3241,12 +3306,41 @@ class Admin extends CI_Controller {
 	        $message = array(
 	            'text' => $sms_content,
 	        );
-	        $response = $this->nexmo->send_message($from, $to, $message);
-	        $stat = json_encode($response["messages"]);
-	        $stat = json_decode($stat);
-	        $return["has_error"] = false;
-	        $return["number"] = $to;
-	        $return["status"] = $stat[0]->status;
+
+			$ch = curl_init();
+
+			curl_setopt($ch, CURLOPT_URL, 'https://rest.nexmo.com/sms/json');
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_POST, 1);
+			// curl_setopt($ch, CURLOPT_POSTFIELDS, "from=".$from."&text=".$message["text"]."&to=".$to."&api_key=240b1547&api_secret=Xfrhb9ITxal8Yco7"); //Bryan
+			curl_setopt($ch, CURLOPT_POSTFIELDS, "from=".$from."&text=".$message["text"]."&to=".$to."&api_key=8fc52ed2&api_secret=xi5dSwMplsFXfugd"); // Lance
+
+
+			$headers = array();
+			$headers[] = 'Content-Type: application/x-www-form-urlencoded';
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+			$result = json_decode(curl_exec($ch),true);
+			$messageRes = $result["messages"];
+			$status = $messageRes[0]["status"];
+			if (curl_errno($ch)) {
+				// echo 'Error:' . curl_error($ch);
+				$return["has_error"] = true;
+				$return["errors"] = curl_error($ch);
+				$return["status"] = $status;
+			}
+			else{
+				$return["has_error"] = false;
+				$return["number"] = $to;
+				$return["status"] = $status;
+			}
+			
+			curl_close($ch);
+			
+	        // $response = $this->nexmo->send_message($from, $to, $message);
+	        // $stat = json_encode($response["messages"]);
+	        // $stat = json_decode($stat);
+	        
 		}
 		echo json_encode($return);
 	}
@@ -3287,30 +3381,296 @@ class Admin extends CI_Controller {
 
 
 	}
-
-
 	public function pred(){
-
-
-
-				$json = exec('\xampp\htdocs\goldcross\pred');
-				$data = json_decode($json);
-				echo $data;
-
-
+		$json = exec('\xampp\htdocs\goldcross\pred');
+		$data = json_decode($json);
+		echo $data;
 	}
-
-
-
-
 
 	public function signout(){
 		$this->session->sess_destroy();
 		redirect("adminlogin/login");
 	}
 
+	public function selectSumple()
+	{
+		$questions = $this->Gcsa_model->selectSum("exam_questions","exam_question_points");
+		echo json_encode($questions);
+	}
+
+	public function initial_interview()
+	{
+		$userinfo = $this->Gcsa_model->fetchAll("accounts",array("email"=>$this->session->adminemail));
+		$userinfo = $userinfo[0];
+		$uinfo = array(
+			"acc_info"=> $userinfo,
+			"page_name"=> "initial_interview",
+		);
+
+		$questions = $this->Gcsa_model->selectSum("exam_questions","exam_question_points");
+		$q_points = $questions->exam_question_points;
+		
+		$applicant = $this->Gcsa_model->fetchAll("applicant",array("applicant_remarks" => 1));
+		$info = [];
+		if ($applicant) {
+			foreach ($applicant as $table_val) {
+				$array_info =  json_decode($table_val->applicant_personal_data,true);
+				$data_info = [
+					"id" => $table_val->applicant_id,
+					"lastname" => $array_info["family_name"],
+					"firstname" => $array_info["first_name"],
+					"gender" => $array_info["gender"],
+					"category" => $array_info["category"],
+					"contact_number" => $array_info['contact_no'],
+					"exam_score" => $table_val->applicant_score,
+					"resume" => $table_val->applicant_resume
+				];
+				array_push($info,$data_info);
+			}
+		}
+
+		$datas = array("applicants"=>$info,"total_points" => $q_points);
+
+		$this->load->view("admin/includes/header",$uinfo);
+		$this->load->view("admin/recruitment_process/initial_interview",$datas);
+		$this->load->view("admin/includes/footer");
+	}
+
+	public function proceedToFinal()
+	{
+		$applicant_id = $this->uri->segment(3);
+		$contact_no = $this->uri->segment(4);
+
+		$cnum = $contact_no;
+		if (preg_match("/^(\+639)\d{9}$/", $cnum)) {
+			$cnum = substr($cnum,3);
+		}
+		else if (preg_match("/^(09)\d{9}$/", $cnum)) {
+			$cnum = substr($cnum,1);
+		}
+		// **********************************Text Message*************************************
+		$from = 'Goldcross';
+		$to = '+63'.$cnum;
+
+		$message = array(
+			'text' => "Congratulations you passed the initial interview",
+		);
+
+		$ch = curl_init();
+
+		curl_setopt($ch, CURLOPT_URL, 'https://rest.nexmo.com/sms/json');
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, "from=".$from."&text=".$message["text"]."&to=".$to."&api_key=240b1547&api_secret=Xfrhb9ITxal8Yco7"); //Bryan
+		// curl_setopt($ch, CURLOPT_POSTFIELDS, "from=".$from."&text=".$message["text"]."&to=".$to."&api_key=8fc52ed2&api_secret=xi5dSwMplsFXfugd"); // Lance
 
 
+		$headers = array();
+		$headers[] = 'Content-Type: application/x-www-form-urlencoded';
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+		$result = json_decode(curl_exec($ch),true);
+		$messageRes = $result["messages"];
+		$status = $messageRes[0]["status"];
+		if (curl_errno($ch)) {
+			// echo 'Error:' . curl_error($ch);
+			$return["has_error"] = true;
+			$return["errors"] = curl_error($ch);
+			$return["status"] = $status;
+		}
+		else{
+			$return["has_error"] = false;
+			$return["number"] = $to;
+			$return["status"] = $status;
+		}
+		
+		curl_close($ch);
+
+		$where = array("applicant_id" => $applicant_id);
+		$updateApplicant = array("applicant_remarks" => 2);
+		$this->Gcsa_model->update("applicant",$updateApplicant,$where);
+
+		redirect("admin/final_interview");
+	}
+
+	public function rejectApplicant()
+	{
+		$applicant_id = $this->uri->segment(3);
+		$contact_no = $this->uri->segment(4);
+
+		$cnum = $contact_no;
+		if (preg_match("/^(\+639)\d{9}$/", $cnum)) {
+			$cnum = substr($cnum,3);
+		}
+		else if (preg_match("/^(09)\d{9}$/", $cnum)) {
+			$cnum = substr($cnum,1);
+		}
+		// **********************************Text Message*************************************
+		$from = 'Goldcross';
+		$to = '+63'.$cnum;
+
+		$message = array(
+			'text' => "We regret to inform you that you failed the interview. Thank you for applying.",
+		);
+
+		$ch = curl_init();
+
+		curl_setopt($ch, CURLOPT_URL, 'https://rest.nexmo.com/sms/json');
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, "from=".$from."&text=".$message["text"]."&to=".$to."&api_key=240b1547&api_secret=Xfrhb9ITxal8Yco7"); //Bryan
+		// curl_setopt($ch, CURLOPT_POSTFIELDS, "from=".$from."&text=".$message["text"]."&to=".$to."&api_key=8fc52ed2&api_secret=xi5dSwMplsFXfugd"); // Lance
 
 
+		$headers = array();
+		$headers[] = 'Content-Type: application/x-www-form-urlencoded';
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+		$result = json_decode(curl_exec($ch),true);
+		$messageRes = $result["messages"];
+		$status = $messageRes[0]["status"];
+		if (curl_errno($ch)) {
+			// echo 'Error:' . curl_error($ch);
+			$return["has_error"] = true;
+			$return["errors"] = curl_error($ch);
+			$return["status"] = $status;
+		}
+		else{
+			$return["has_error"] = false;
+			$return["number"] = $to;
+			$return["status"] = $status;
+		}
+		
+		curl_close($ch);
+
+		$where = array("applicant_id" => $applicant_id);
+		$updateApplicant = array("applicant_remarks" => 0);
+		$this->Gcsa_model->update("applicant",$updateApplicant,$where);
+
+		redirect("admin/archives");
+	}
+
+	public function hireApplicant()
+	{
+		$applicant_id = $this->uri->segment(3);
+
+		$fetchApplicant = $this->Gcsa_model->fetchAll("applicant",array("applicant_id" => $applicant_id));
+		$info = [];
+		if ($fetchApplicant) {
+			foreach ($fetchApplicant as $table_val) {
+				$array_info =  json_decode($table_val->applicant_personal_data,true);
+				$data_info = [
+					"id" => $table_val->applicant_id,
+					"lastname" => $array_info["family_name"],
+					"firstname" => $array_info["first_name"],
+					"gender" => $array_info["gender"],
+					"category" => $array_info["category"],
+					"contact_number" => $array_info['contact_no'],
+					"exam_score" => $table_val->applicant_score,
+					"resume" => $table_val->applicant_resume
+				];
+				array_push($info,$data_info);
+			}
+		}
+		$info = $info[0];
+
+		$insertToAccounts = array(
+			"firstname" => $info["firstname"],
+			"lastname" => $info["lastname"],
+			"position" => $info["category"],
+			"email" => $info["contact_number"],
+			"password" => sha1("test"),
+			"status" => 1,
+			"account_access" => 2
+		);
+		
+		$this->Gcsa_model->insert("accounts",$insertToAccounts);
+
+		$cnum = $info["contact_number"];
+		if (preg_match("/^(\+639)\d{9}$/", $cnum)) {
+			$cnum = substr($cnum,3);
+		}
+		else if (preg_match("/^(09)\d{9}$/", $cnum)) {
+			$cnum = substr($cnum,1);
+		}
+		// **********************************Text Message*************************************
+		$from = 'Goldcross';
+		$to = '+63'.$cnum;
+
+		$message = array(
+			'text' => "Congratulations you passed the final interview.",
+		);
+
+		$ch = curl_init();
+
+		curl_setopt($ch, CURLOPT_URL, 'https://rest.nexmo.com/sms/json');
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, "from=".$from."&text=".$message["text"]."&to=".$to."&api_key=240b1547&api_secret=Xfrhb9ITxal8Yco7"); //Bryan
+		// curl_setopt($ch, CURLOPT_POSTFIELDS, "from=".$from."&text=".$message["text"]."&to=".$to."&api_key=8fc52ed2&api_secret=xi5dSwMplsFXfugd"); // Lance
+
+
+		$headers = array();
+		$headers[] = 'Content-Type: application/x-www-form-urlencoded';
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+		$result = json_decode(curl_exec($ch),true);
+		$messageRes = $result["messages"];
+		$status = $messageRes[0]["status"];
+		if (curl_errno($ch)) {
+			// echo 'Error:' . curl_error($ch);
+			$return["has_error"] = true;
+			$return["errors"] = curl_error($ch);
+			$return["status"] = $status;
+		}
+		else{
+			$return["has_error"] = false;
+			$return["number"] = $to;
+			$return["status"] = $status;
+		}
+		
+		curl_close($ch);
+
+		$where = array("applicant_id" => $applicant_id);
+		$this->Gcsa_model->delete("applicant",$where);
+
+		redirect("admin/account_pinformation");
+	}
+
+	public function final_interview()
+	{
+		$userinfo = $this->Gcsa_model->fetchAll("accounts",array("email"=>$this->session->adminemail));
+		$userinfo = $userinfo[0];
+		$uinfo = array(
+			"acc_info"=> $userinfo,
+			"page_name"=> "final_interview",
+		);
+
+		$questions = $this->Gcsa_model->selectSum("exam_questions","exam_question_points");
+		$q_points = $questions->exam_question_points;
+		
+		$applicant = $this->Gcsa_model->fetchAll("applicant",array("applicant_remarks" => 2));
+		$info = [];
+		if ($applicant) {
+			foreach ($applicant as $table_val) {
+				$array_info =  json_decode($table_val->applicant_personal_data,true);
+				$data_info = [
+					"id" => $table_val->applicant_id,
+					"lastname" => $array_info["family_name"],
+					"firstname" => $array_info["first_name"],
+					"gender" => $array_info["gender"],
+					"category" => $array_info["category"],
+					"contact_number" => $array_info['contact_no'],
+					"resume" => $table_val->applicant_resume
+				];
+				array_push($info,$data_info);
+			}
+		}
+
+		$datas = array("applicants"=>$info,"total_points" => $q_points);
+
+		$this->load->view("admin/includes/header",$uinfo);
+		$this->load->view("admin/recruitment_process/final_interview",$datas);
+		$this->load->view("admin/includes/footer");
+	}
 }

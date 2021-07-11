@@ -53,7 +53,7 @@
            
           <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Top 5 Performing Applicants</h3>
+              <h3 class="box-title">Top Performing Applicants</h3>
 
               <!-- <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -79,10 +79,10 @@
                       <?php foreach ($top as $rank => $top_value): $rank++; ?>
                         <tr>
                           <td><?= $rank ?></td>
-                          <td><?= $top_value->firstname ?></td>
-                          <td><?= $top_value->lastname ?></td>
-                          <td><?= $top_value->position ?></td>
-                          <td><?= $top_value->total_points ?></td>
+                          <td><?= $top_value["firstname"] ?></td>
+                          <td><?= $top_value["lastname"] ?></td>
+                          <td><?= $top_value["category"] ?></td>
+                          <td><?= $top_value["exam_score"]."/". $total_points ?></td>
                         </tr>
                       <?php endforeach ?>
                     <?php endif ?>

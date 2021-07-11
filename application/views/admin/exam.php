@@ -1,16 +1,16 @@
 <body>
 	<div id="quizContainer" class="container">
-		<div class="form-group">
+		<!-- <div class="form-group">
 		    <label>Firstname:</label>
 		    <input type="text" class="form-control" id="fname">
 	  	</div>
 	  	<div class="form-group">
 		    <label for="email">Lastname:</label>
 		    <input type="text" class="form-control" id="lname">
-	  	</div>
+	  	</div> -->
 		<div class="form-group">
-		    <label for="sec_lic_no">Security License No.:</label>
-		    <input type="text" class="form-control" id="sec_lic_no">
+		    <label for="sec_lic_no_id">Security License No.:</label>
+		    <input type="text" class="form-control" id="sec_lic_no_id" name="sec_lic_no">
 	  	</div>
 		<div class="title">Gold Cross Assessment Exam</div>
 		<div class="subtitle">Numerical Reasoning / Verbal Reasoning</div>

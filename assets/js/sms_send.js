@@ -38,45 +38,46 @@ $(document).ready(function(){
 	$(".btn-send-sms").click(function(){
 		var num = $(this).attr("id");
 		var sms_content = $("#my-sms-content").val();
-
-		console.log(sms_content);
-		// $.ajax({
-	 //      type : "post",
-	 //      url : base_url+"admin/sendsms_withexp",
-	 //      data : {
-	 //        sms_content : sms_content,
-	 //        num : num
-	 //      },
-	 //      dataType : "json",
-	 //      success : function(res){
-	 //      	console.log(res);
-	 //        if (res.has_error) {
-	 //        	$(".has-feedback").addClass("has-error");
-	 //        	$("textarea[name='sms_content']").after("<span class='help-block'>"+res.errors["sms_content"]+"</span>");
-	 //        }
-	 //        else{
-	 //        	$(".has-feedback").removeClass("has-error");
-	 //        	$("textarea[name='sms_content']").next("span").remove();
-	 //        	$("#textModal").modal("hide");
-	 //        	if (res.status == "0") {
-	 //        		$(".sms-sent-message").text("Text message has been sent to " + res.number);
-		// 			$('#sent_success_modal').modal('show');
-		// 			console.log(res.status);
-	 //        	}
-	 //        	else{
-	 //        		$("#sent_success_modal").attr('class', 'modal modal-danger fade');
-		// 			$(".sms-sent-message").text("Text message has not been sent to "+ res.number);
-		// 			$('#sent_success_modal').modal('show');
-		// 			console.log(res.status);
-	 //        	}
-
-	 //        }
-	 //      }
-	 //      ,
-	 //      error:function(res){
-	 //        console.log("Error");
-	 //          console.log(res);
-	 //      }
-	 //    });
+		$.ajax({
+	      type : "post",
+	      url : base_url+"admin/sendsms_withexp",
+	      data : {
+	        sms_content : sms_content,
+	        num : num
+	      },
+	      dataType : "json",
+	      success : function(res){
+			  
+			console.log("Result: " , res);
+			console.log("Result: " , res.has_error);
+	        if (res.has_error) {
+	        	$(".has-feedback").addClass("has-error");
+	        	$("textarea[name='sms_content']").after("<span class='help-block'>"+res.errors["sms_content"]+"</span>");
+	        }
+	        else{
+				// var messagesStatus = res.status;
+				// var status = messagesStatus.messages[0].status
+				
+	        	$(".has-feedback").removeClass("has-error");
+	        	$("textarea[name='sms_content']").next("span").remove();
+	        	$("#textModal").modal("hide");
+	        	if (res.status == "0") {
+	        		$(".sms-sent-message").text("Text message has been sent to " + res.number);
+					$('#sent_success_modal').modal('show');
+					console.log(res.status);
+	        	}
+	        	else{
+	        		$("#sent_success_modal").attr('class', 'modal modal-danger fade');
+					$(".sms-sent-message").text("Text message has not been sent to "+ res.number);
+					$('#sent_success_modal').modal('show');
+					console.log(res.status);
+	        	}
+	        }
+	      }
+	      ,
+	      error:function(res){
+	          console.log("Error: ",res);
+	      }
+	    });
 	});
 })

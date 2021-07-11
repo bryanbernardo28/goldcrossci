@@ -23,6 +23,7 @@ $(function(){
 		questions = JSON.parse(data);
 		totQuestions = questions.length;
 		loadQuestion(currentQuestion);
+		console.log(base_url);
 	});
 });
 
@@ -72,14 +73,25 @@ function loadNextQuestion(){
 		container.style.display = 'none';
 		resultCont.style.display = '';
 		$(".display_text").text("Thank you for taking the exam.");
-		var fname = $("#fname").val();
-		var lname = $("#lname").val();
-		var sec_lic_no = $("#sec_lic_no").val();
-		var fetch_class = $.post(base_url+"Admin/submit_exam", { "score": score ,"fname":fname,"lname":lname,"sec_lic_no":sec_lic_no}, function(data){
-			console.log(data);
-		}, "json");
-
-		console.log(base_url);
+		// var fname = $("#fname").val();
+		// var lname = $("#lname").val();
+		var sec_lic_no = $("input#sec_lic_no_id").val();
+		$.ajax({
+			type : "post",
+			url : base_url+"admin/submit_exam",
+			data : { 
+				"score": score ,
+				"sec_lic_no":sec_lic_no
+			},
+			dataType : "json",
+			success : function(res){
+				console.log("Success response: " ,res);
+			},
+			error:function(res){
+				console.log("Error response: ",res);
+			}
+		});
+		// console.log(base_url);
 		return;
 	}
 	loadQuestion(currentQuestion);
